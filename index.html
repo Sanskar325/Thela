@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Thela Purnia</title>
+<title>Ghoom XI</title>
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="description" content="Thela, a fast food cart in Purnia, Bihar. Momos, rolls, chowmein, burgers and kulhad chai, cooked to order every evening.">
+<meta name="description" content="Ghoom XI, a fast food cart in Purnia, Bihar. Momos, rolls, chowmein, burgers and kulhad chai, cooked to order every evening.">
 <meta name="theme-color" content="#0B2820">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -432,9 +432,10 @@ address{font-size:20px;font-style:normal;line-height:1.5}
 
 /* Footer */
 .foot{position:relative;padding-block:clamp(48px,8vw,96px) clamp(32px,4vw,48px);border-top:1px solid var(--brass-dim)}
-.wordmark{margin:0;padding-top:.06em;font:400 clamp(120px,30vw,400px)/1.25 var(--f-display);text-align:center;color:transparent;
+.wordmark{margin:0;padding-top:.06em;font:400 clamp(56px,15vw,210px)/1.2 var(--f-display);text-align:center;white-space:nowrap;color:transparent;
   background:repeating-linear-gradient(180deg,var(--brass) 0 1.5px,transparent 1.5px 6px);-webkit-background-clip:text;background-clip:text;transition:background-position 1.4s cubic-bezier(.6,0,.2,1)}
 .wordmark:hover{background-position:0 -36px}
+@media (max-width:620px){.wordmark{background-image:repeating-linear-gradient(180deg,var(--brass) 0 2px,transparent 2px 3.5px)}} /* finer engraving so the smaller word stays readable */
 .foot__row{display:grid;justify-items:start;gap:14px;margin-top:clamp(20px,4vw,40px);font-size:14px;color:var(--moss);text-align:left}
 .foot__contact span{display:block}
 .foot__row p{margin:0}
@@ -500,9 +501,9 @@ body.has-order .foot{padding-bottom:150px}
 
 <header class="top" id="header">
   <div class="wrap">
-    <a class="logo" href="#top" aria-label="Thela, back to top">
+    <a class="logo" href="#top" aria-label="Ghoom XI, back to top">
       <svg viewBox="0 0 32 32" aria-hidden="true"><g class="logo-wheel"><circle cx="16" cy="16" r="13.5"/><path d="M16 4v24M4 16h24M7.5 7.5l17 17M7.5 24.5l17-17"/></g><circle class="hub" cx="16" cy="16" r="2.4"/></svg>
-      <span class="logo__text"><span class="logo__hi" lang="hi">ठेला</span><span class="logo__en">Thela · Purnia</span></span>
+      <span class="logo__text"><span class="logo__hi">Ghoom XI</span><span class="logo__en">Purnia · Bihar</span></span>
     </a>
     <nav class="nav" aria-label="Sections">
       <a href="#favourites">Favourites</a>
@@ -609,8 +610,8 @@ body.has-order .foot{padding-bottom:150px}
             <!-- body, handle, counter -->
             <path class="d solid" pathLength="1" style="--d:.6s" d="M120 236H540V296H120Z"/>
             <path class="d thin" pathLength="1" style="--d:.85s" d="M138 248H522V284H138Z"/>
-            <path class="d thin" pathLength="1" style="--d:1.2s" d="M156 266H272M272 266l6-5 6 5-6 5zM376 266l6-5 6 5-6 5zM388 266H504"/>
-            <text class="cart-name" x="330" y="277" text-anchor="middle" lang="hi">ठेला</text>
+            <path class="d thin" pathLength="1" style="--d:1.2s" d="M156 266H232M232 266l6-5 6 5-6 5zM416 266l6-5 6 5-6 5zM428 266H504"/>
+            <text class="cart-name" x="330" y="276" text-anchor="middle">Ghoom XI</text>
             <path class="d" pathLength="1" style="--d:.9s" d="M120 246 60 236M120 270 60 236M60 236H42"/>
             <path class="d solid" pathLength="1" style="--d:.9s" d="M106 226H554V236H106Z"/>
 
@@ -900,7 +901,7 @@ body.has-order .foot{padding-bottom:150px}
   <section class="sec" id="makers" data-thread="left">
     <div class="wrap">
       <header class="sec-head">
-        <p class="eyebrow">The Thela makers</p>
+        <p class="eyebrow">The Ghoom XI makers</p>
         <h2>Three people, <span class="hl" data-draw>one cart.</span></h2>
         <p class="lead">The faces you'll see at the counter every evening.</p>
       </header>
@@ -1006,11 +1007,11 @@ body.has-order .foot{padding-bottom:150px}
   <!-- FOOTER -->
   <footer class="foot">
     <div class="wrap">
-      <p class="wordmark" lang="hi" aria-label="Thela">ठेला</p>
+      <p class="wordmark">Ghoom XI</p>
       <div class="foot__row">
-        <p><b>Thela</b><br>Fast food cart<br>Line Bazar Chowk, Purnia, Bihar 854301</p>
+        <p><b>Ghoom XI</b><br>Fast food cart<br>Line Bazar Chowk, Purnia, Bihar 854301</p>
         <p class="foot__contact" data-needs="contact" hidden><span data-needs="phone" hidden data-cfg="phone"></span><span data-needs="apps" hidden data-cfg="appsLine">Also on Zomato and Swiggy</span></p>
-        <p>© 2026 Thela. Made in Purnia.<span data-needs="fssai" hidden><br>FSSAI Reg. No. <span data-cfg="fssai"></span></span></p>
+        <p>© 2026 Ghoom XI. Made in Purnia.<span data-needs="fssai" hidden><br>FSSAI Reg. No. <span data-cfg="fssai"></span></span></p>
       </div>
     </div>
   </footer>
@@ -1092,7 +1093,7 @@ body.has-order .foot{padding-bottom:150px}
 
   /* ─── Your cart's details. Fill these in and everything on the page updates. ─── */
   const CONFIG = {
-    name: 'Thela',
+    name: 'Ghoom XI',
     whatsapp: '',          // country code + number, digits only, e.g. '91XXXXXXXXXX'
     phone: '',             // as you want it shown, e.g. '+91 XXXXX XXXXX'
     mapsQuery: 'Line Bazar Chowk, Purnia, Bihar', // used only until `location` below is set
@@ -1165,7 +1166,7 @@ body.has-order .foot{padding-bottom:150px}
     { name: 'Ritishek Verma', role: 'Co-founder', roleHi: 'सह-संस्थापक', chef: false, photo: '',
       bio: 'Write a line or two about Ritishek: what they look after at the cart.' },
     { name: 'Sanskar Verma', role: 'Co-founder', roleHi: 'सह-संस्थापक', chef: false, photo: '',
-      bio: 'Write a line or two about yourself: why you started Thela, and the dish you always order.' },
+      bio: 'Write a line or two about yourself: why you started Ghoom XI, and the dish you always order.' },
     { name: 'Our chef', role: 'Chef', roleHi: 'शेफ़', chef: true, photo: '',
       bio: "Write a line about your chef: where they learned to cook, and the plate they're proudest of." },
   ];

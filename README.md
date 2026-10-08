@@ -1,6 +1,6 @@
-# Thela
+# Ghoom XI
 
-Website for **Thela (ठेला)**, our fast food cart in Purnia, Bihar. Momos, rolls, chowmein, burgers and kulhad chai, cooked to order every evening.
+Website for **Ghoom XI**, our fast food cart in Purnia, Bihar. Momos, rolls, chowmein, burgers and kulhad chai, cooked to order every evening.
 
 Live site: https://sanskar325.github.io/Thela/
 
@@ -56,4 +56,4 @@ The site is served by GitHub Pages from the `main` branch. Any change pushed to 
 
 ## Find us
 
-Thela, Line Bazar Chowk, Purnia, Bihar 854301
+Ghoom XI, Line Bazar Chowk, Purnia, Bihar 854301
