@@ -1,0 +1,1802 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Thela Purnia</title>
+<meta name="description" content="Thela, a fast food cart in Purnia, Bihar. Momos, rolls, chowmein, burgers and kulhad chai, cooked to order every evening.">
+<meta name="theme-color" content="#0B2820">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600&family=Rozha+One&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap">
+<style>
+/* Layout: one brass line, the road the cart stands on, runs the length of the page and draws itself as you scroll.
+   Every illustration is drawn in that same line. A single, deliberate "evening at the cart" world: bottle green and brass. */
+:root{
+  --night:#0B2820;      /* bottle-green ground, the cart's paint */
+  --night-2:#0F3229;    /* raised surface */
+  --brass:#D9B064;      /* the line, and the only accent */
+  --brass-dim:rgba(217,176,100,.26);
+  --chalk:#F2EBDA;      /* text, like chalk on a menu board */
+  --moss:#A5BCB0;       /* secondary text */
+  --glow:#FFCB72;       /* the bulb */
+  --glow-soft:rgba(255,203,114,.55);
+  --open:#63D394;
+  --alert:#F2937A;     /* form errors */
+  --veg:#1E8E3E;        /* FSSAI veg mark */
+  --nonveg:#8A3A1A;     /* FSSAI non-veg mark */
+  --shadow:0 24px 60px -12px rgba(0,0,0,.6);
+  --scrim:rgba(4,16,12,.68);
+  --zomato:#E23744;     /* brand dots on the delivery-app links */
+  --swiggy:#FC8019;
+
+  --f-display:"Rozha One","Tiro Devanagari Hindi",Georgia,serif;
+  --f-body:"Mukta","Noto Sans Devanagari",system-ui,sans-serif;
+  --f-accent:"Tiro Devanagari Hindi",Georgia,serif;
+
+  --gutter:clamp(16px,4vw,40px);
+  --maxw:1180px;
+  --header-h:68px;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scrollbar-color:var(--brass) var(--night)}
+/* Scrollbars in the cart's colours: brass handle on a bottle-green track (Safari and older Chrome) */
+::-webkit-scrollbar{width:11px;height:11px}
+::-webkit-scrollbar-track{background:var(--night)}
+::-webkit-scrollbar-thumb{background:var(--brass);border:3px solid var(--night);border-radius:999px}
+::-webkit-scrollbar-thumb:hover{background:var(--glow)}
+body{margin:0;background:var(--night);color:var(--chalk);font:400 17px/1.65 var(--f-body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+::selection{background:var(--brass);color:var(--night)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+h1,h2,h3{margin:0;font-weight:400}
+[hidden]{display:none!important}
+
+.page{position:relative;overflow-x:clip}
+.wrap{position:relative;z-index:1;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
+
+/* ── Header ─────────────────────────────── */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;height:var(--header-h);border-bottom:1px solid transparent;transition:background-color .4s,border-color .4s}
+.top.is-scrolled{background:color-mix(in srgb,var(--night) 86%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom-color:var(--brass-dim)}
+.top .wrap{height:100%;display:flex;align-items:center;gap:clamp(16px,3vw,36px)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto}
+.logo svg{width:32px;height:32px;flex:none}
+.logo circle{fill:none;stroke:var(--brass);stroke-width:1.4}
+.logo path{stroke:var(--brass);stroke-width:1}
+.logo .hub{fill:var(--brass);stroke:none}
+.logo__text{display:grid;gap:1px}
+.logo__hi{font:400 25px/1 var(--f-display);color:var(--brass);padding-top:3px}
+.logo__en{font:500 10.5px/1.2 var(--f-body);letter-spacing:.24em;text-transform:uppercase;color:var(--moss)}
+.nav{display:flex;gap:28px}
+.nav a{position:relative;padding-block:6px;font-size:15px;text-decoration:none}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--brass);transform:scaleX(0);transform-origin:right;transition:transform .5s cubic-bezier(.6,0,.2,1)}
+.nav a:hover::after{transform:scaleX(1);transform-origin:left}
+@media (max-width:760px){.nav{display:none}}
+
+/* ── Buttons ────────────────────────────── */
+.btn{position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:12px 22px;border:1px solid var(--brass);border-radius:2px;background:var(--brass);color:var(--night);font:500 16px/1.1 var(--f-body);letter-spacing:.01em;text-decoration:none;cursor:pointer;transition:color .35s}
+.btn::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--chalk);transform:scaleX(0);transform-origin:right;transition:transform .5s cubic-bezier(.6,0,.2,1)}
+.btn:hover::before{transform:scaleX(1);transform-origin:left}
+.btn--ghost{background:transparent;color:var(--chalk)}
+.btn--ghost::before{background:var(--brass)}
+.btn--ghost:hover{color:var(--night)}
+.btn--sm{min-height:40px;padding:8px 16px;font-size:15px}
+.btn svg{width:18px;height:18px;flex:none}
+
+.eyebrow{display:flex;align-items:center;gap:12px;margin:0;font:500 12.5px/1.2 var(--f-body);letter-spacing:.2em;text-transform:uppercase;color:var(--brass)}
+.eyebrow::before{content:"";width:32px;height:1px;background:currentColor}
+.lead{margin:0;max-width:34em;font-size:clamp(17px,1.5vw,20px);line-height:1.6;color:var(--moss)}
+
+.chip{display:inline-flex;align-items:center;gap:8px;padding:5px 12px 5px 10px;border:1px solid var(--brass-dim);border-radius:999px;font-size:13px;letter-spacing:.03em;color:var(--chalk);white-space:nowrap}
+.chip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--brass)}
+.chip[data-state="open"]::before{background:var(--open);animation:ping 2.2s ease-out infinite}
+.chip[data-state="soon"]::before{background:var(--glow)}
+.chip[data-state="closed"]::before{background:var(--moss)}
+@keyframes ping{0%{box-shadow:0 0 0 0 var(--open)}100%{box-shadow:0 0 0 9px transparent}}
+
+/* ── Line drawing (shared) ──────────────── */
+.d{fill:none;stroke:var(--brass);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 2;stroke-dashoffset:0}
+.d.thin{stroke-width:1.25;opacity:.8}
+.d.solid{fill:var(--night)}
+@keyframes draw{from{stroke-dashoffset:1.01}to{stroke-dashoffset:0}}
+@keyframes fade{from{opacity:0}}
+[data-draw] .d{transition:stroke-dashoffset 1.5s cubic-bezier(.65,0,.35,1) var(--d,0s)}
+[data-draw].armed .d{stroke-dashoffset:1.01;transition:none}
+
+/* ── Hero ───────────────────────────────── */
+.hero{position:relative;overflow:clip;padding-block:clamp(28px,5vw,64px) clamp(48px,7vw,88px)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,11fr) minmax(0,13fr);gap:clamp(20px,4vw,56px);align-items:center}
+.hero__copy{position:relative;z-index:2;display:grid;gap:24px;justify-items:start}
+.hero__copy>*{animation:rise .9s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0) * 110ms + 150ms)}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}}
+.hero__top{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px}
+h1{font:400 clamp(46px,6.2vw,88px)/1 var(--f-display);letter-spacing:-.01em;text-wrap:balance}
+.swash{position:relative;display:inline-block;color:var(--brass)}
+.swash svg{position:absolute;left:-2%;bottom:-.2em;width:104%;height:auto;overflow:visible}
+.swash .d{stroke-width:2.6;animation:draw 1s cubic-bezier(.65,0,.35,1) var(--d,1s) both}
+.swash .d.thin{stroke-width:1.4}
+.hero__cta{display:flex;flex-wrap:wrap;gap:12px}
+.hero__meta{display:flex;flex-wrap:wrap;gap:8px 22px;margin:0;padding:0;list-style:none;font-size:14px;color:var(--moss)}
+.hero__meta li{display:flex;align-items:center;gap:8px}
+.hero__meta li::before{content:"";width:14px;height:1px;background:var(--brass)}
+.hero__art{position:relative;min-width:0}
+.cart{display:block;width:100%;max-width:100%;height:auto;overflow:visible}
+.cart .d{animation:draw var(--t,1.15s) cubic-bezier(.65,0,.35,1) var(--d,0s) both}
+.cart .glow{opacity:.85;animation:bulbOn 1.3s linear 2.35s both,breathe 6s ease-in-out 3.8s infinite}
+.cart .bulb-fill{fill:var(--glow);opacity:.85;animation:bulbOn 1.3s linear 2.35s both}
+@keyframes bulbOn{0%{opacity:0}12%{opacity:.7}20%{opacity:.06}34%{opacity:.8}42%{opacity:.2}60%,100%{opacity:.85}}
+@keyframes breathe{0%,100%{opacity:.85}50%{opacity:.66}}
+.cart-name{font:400 30px var(--f-display);fill:var(--brass);animation:fade .9s ease 2.1s both}
+.board-t{font:600 11px var(--f-body);letter-spacing:.08em;fill:var(--chalk);animation:fade .9s ease 2.4s both}
+
+/* The cart rolls once the bulb is on (2.6s): the road slides left at 60 units/s, an easy evening
+   pace. Wheels of radius 56 turn once every 2π·56/60 ≈ 5.86s, so they never look like they skid. */
+.cart .wheel{transform-box:fill-box;transform-origin:50% 50%;animation:spin 5.86s linear 2.6s infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cart .street{color:var(--brass);opacity:.2;animation:fade 1.4s ease 2.3s both}
+.cart .road{color:var(--brass);opacity:.85}
+.cart .slide{animation:slide 11.33s linear 2.6s infinite}
+.cart .slide--far{animation-duration:22.67s}
+@keyframes slide{to{transform:translateX(-680px)}}
+.cart .bob{animation:bob .5s ease-in-out 2.6s infinite alternate}
+@keyframes bob{to{transform:translateY(-1.2px)}}
+.cart .arm-l{transform-box:fill-box;transform-origin:100% 0;animation:stir .5s ease-in-out 2.6s infinite alternate}
+@keyframes stir{from{transform:rotate(-7deg)}to{transform:rotate(8deg)}}
+.cart .arm-r{transform-box:fill-box;transform-origin:0 0;animation:offer 1.8s ease-in-out 2.6s infinite alternate}
+@keyframes offer{from{transform:rotate(3deg)}to{transform:rotate(-5deg)}}
+.cart .sign{transform-box:fill-box;transform-origin:50% 0;animation:swing 1.8s ease-in-out 2.6s infinite alternate}
+@keyframes swing{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+.cat{animation:fade .9s ease 2.2s both}
+.cat path{fill:var(--night);stroke:var(--brass);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.cat .cat__line{fill:none;stroke-width:1.4}
+.cat .cat__nose{fill:var(--brass);stroke:none}
+.cat .cat__whisker{fill:none;stroke-width:.8}
+.cat .cat__tail{fill:none;stroke-width:2.6}
+.cat__far{opacity:.5}
+.cat__wander{animation:wander 9s ease-in-out 2.6s infinite alternate}
+@keyframes wander{from{transform:translateX(-8px)}to{transform:translateX(8px)}}
+.cat__leg{transform-box:fill-box;transform-origin:50% 0;animation:paw .45s ease-in-out 2.6s infinite alternate}
+.cat__leg--b{animation-direction:alternate-reverse}
+@keyframes paw{from{transform:rotate(-16deg)}to{transform:rotate(16deg)}}
+.cat__bob{animation:catbob .225s ease-in-out 2.6s infinite alternate}
+@keyframes catbob{to{transform:translateY(-1.4px)}}
+.cat .cat__tail{transform-box:fill-box;transform-origin:90% 100%;animation:tailsway 1.4s ease-in-out 2.6s infinite alternate}
+@keyframes tailsway{from{transform:rotate(-6deg)}to{transform:rotate(8deg)}}
+.cat__head{transform-box:fill-box;transform-origin:30% 90%;animation:nod .45s ease-in-out 2.6s infinite alternate}
+@keyframes nod{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}
+.cart.is-off,.cart.is-off *{animation-play-state:paused!important}
+.steam{fill:none;stroke:var(--chalk);stroke-width:1.4;stroke-linecap:round;stroke-dasharray:.3 2;stroke-dashoffset:.3;opacity:0;animation:steam 3.2s linear var(--d,2.6s) infinite}
+@keyframes steam{0%{stroke-dashoffset:.3;opacity:0}25%{opacity:.55}100%{stroke-dashoffset:-1;opacity:0}}
+.flag{transform-box:fill-box;transform-origin:0% 50%;animation:flutter 2.8s ease-in-out 2.2s infinite}
+@keyframes flutter{0%,100%{transform:skewY(0) scaleX(1)}50%{transform:skewY(6deg) scaleX(.88)}}
+.flame{animation:flick .16s steps(2) 2.4s infinite alternate}
+@keyframes flick{to{opacity:.45}}
+@media (max-width:880px){.hero .wrap{grid-template-columns:minmax(0,1fr)}}
+
+/* ── Ticker ─────────────────────────────── */
+.ticker{position:relative;z-index:1;overflow:hidden;border-block:1px solid var(--brass-dim);padding-block:clamp(12px,2vw,20px)}
+.ticker__track{display:flex;width:max-content;animation:tick 64s linear infinite}
+.ticker:hover .ticker__track{animation-play-state:paused}
+@keyframes tick{to{transform:translateX(-50%)}}
+.ticker__item{display:flex;align-items:center;gap:clamp(14px,2vw,26px);padding-inline:clamp(14px,2vw,26px);white-space:nowrap;color:var(--brass)}
+.ticker__en{font:400 clamp(38px,5.6vw,80px)/1.15 var(--f-display);color:transparent;-webkit-text-stroke:1.2px var(--brass);transition:color .5s}
+.ticker__item:hover .ticker__en{color:var(--brass)}
+.ticker__hi{font:400 clamp(16px,1.8vw,24px)/1 var(--f-accent);color:var(--moss)}
+.ticker__item svg{width:14px;height:14px;flex:none}
+
+/* ── Sections ───────────────────────────── */
+.sec{position:relative;padding-block:clamp(72px,10vw,136px);scroll-margin-top:var(--header-h)}
+.sec-head{display:grid;gap:16px;max-width:760px;margin-bottom:clamp(36px,5vw,64px)}
+h2{font:400 clamp(36px,4.6vw,64px)/1.04 var(--f-display);letter-spacing:-.005em;text-wrap:balance}
+/* Highlighter: a brass block behind the words, swiped in once when it scrolls into view */
+.hl{padding:0 .14em;color:var(--night);background:linear-gradient(var(--brass),var(--brass)) left center/100% 100% no-repeat;
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;
+  transition:background-size .9s cubic-bezier(.65,0,.35,1) .25s,color .6s ease .45s}
+.hl.armed{background-size:0% 100%;color:var(--chalk);transition:none}
+
+/* Favourites */
+.sig__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(24px,3vw,40px)}
+.sig__card{position:relative;display:grid;gap:10px;align-content:start;padding-top:24px;border-top:1px solid var(--brass-dim)}
+.sig__card::before{content:"";position:absolute;top:-1px;left:0;width:100%;height:1px;background:var(--brass);transform:scaleX(0);transform-origin:left;transition:transform .9s cubic-bezier(.6,0,.2,1)}
+.sig__card:hover::before{transform:scaleX(1)}
+.sig__art{display:block;width:100%;max-width:100%;height:auto;aspect-ratio:5/4;margin-bottom:6px;background:radial-gradient(circle at 50% 58%,var(--night-2),transparent 68%)}
+.sig__title{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.sig__name{font:400 27px/1.1 var(--f-display)}
+.sig__hi{font:400 18px/1.2 var(--f-accent);color:var(--brass);white-space:nowrap}
+.sig__card p{margin:0;font-size:16px;color:var(--moss)}
+.sig__price{font:500 13px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase}
+/* Each favourite keeps cooking once it's drawn: steam, puffing momos, chopsticks lifting noodles */
+.sig__art .steam{stroke-width:1.3;animation-duration:3s}
+.momo{transform-box:fill-box;transform-origin:50% 100%;animation:puff 2.4s ease-in-out infinite}
+.momo--2{animation-delay:.4s}
+.momo--3{animation-delay:.8s}
+@keyframes puff{0%,100%{transform:scale(1)}50%{transform:scale(1.05,1.07)}}
+.roll-bob{animation:rollbob 2.6s ease-in-out infinite}
+@keyframes rollbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.chilli{transform-box:fill-box;transform-origin:50% 0;animation:sway 2.2s ease-in-out infinite alternate}
+.lemon{transform-box:fill-box;transform-origin:50% 100%;animation:sway 2.6s ease-in-out infinite alternate-reverse}
+@keyframes sway{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+.sticks{animation:lift 2.4s ease-in-out infinite}
+@keyframes lift{0%,100%{transform:translateY(0)}45%,60%{transform:translateY(-9px)}}
+.strands{transform-box:fill-box;transform-origin:50% 100%;animation:stretch 2.4s ease-in-out infinite}
+@keyframes stretch{0%,100%{transform:scaleY(1)}45%,60%{transform:scaleY(1.25)}}
+.chai-ripple{fill:none;stroke:var(--brass);stroke-width:1;transform-box:fill-box;transform-origin:50% 50%;animation:ripplechai 2.8s ease-out infinite}
+@keyframes ripplechai{from{transform:scale(.2);opacity:.9}to{transform:scale(1);opacity:0}}
+[data-anim].is-off *{animation-play-state:paused!important}
+@media (max-width:1020px){.sig__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:540px){.sig__grid{grid-template-columns:minmax(0,1fr)}}
+
+/* Menu */
+.menu__intro{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:28px 64px;align-items:end;margin-bottom:clamp(28px,4vw,48px)}
+.menu__intro .sec-head{margin-bottom:0}
+.menu__how{display:grid;gap:18px}
+.steps{display:grid;gap:10px;margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:baseline;font-size:16px;color:var(--moss)}
+.steps li::before{counter-increment:s;content:counter(s);font:400 22px/1 var(--f-display);color:var(--brass)}
+.legend{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin:0;font-size:14px;color:var(--moss)}
+.legend .mark{margin-top:0}
+.legend span+span{margin-left:10px}
+@media (max-width:880px){.menu__intro{grid-template-columns:minmax(0,1fr)}}
+
+.tabs{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--header-h));z-index:6;display:flex;gap:clamp(20px,3vw,36px);overflow-x:auto;scrollbar-width:none;background:var(--night);border-bottom:1px solid var(--brass-dim)}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;appearance:none;background:none;border:0;padding:15px 0;color:var(--moss);font:500 15px/1 var(--f-body);letter-spacing:.03em;cursor:pointer;transition:color .3s}
+.tab:hover,.tab[aria-current="true"]{color:var(--chalk)}
+.tabs__ind{position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--brass);transition:transform .55s cubic-bezier(.6,0,.2,1),width .55s cubic-bezier(.6,0,.2,1)}
+
+.mgroup{display:grid;grid-template-columns:minmax(0,250px) minmax(0,1fr);gap:20px clamp(24px,5vw,72px);padding-block:clamp(32px,4vw,52px);border-bottom:1px solid var(--brass-dim);scroll-margin-top:calc(var(--header-h) + 60px)}
+.mgroup:last-child{border-bottom:0}
+.mgroup__head{position:sticky;top:calc(var(--header-h) + 84px);align-self:start;display:grid;gap:4px;align-content:start}
+.mgroup__head h3{font:400 clamp(28px,3vw,38px)/1.05 var(--f-display)}
+.mgroup__hi{margin:0;font:400 20px/1.3 var(--f-accent);color:var(--brass)}
+.mgroup__note{margin:0;padding-top:6px;font-size:15px;line-height:1.55;color:var(--moss)}
+.mgroup__list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 44px;margin:0;padding:0;list-style:none}
+@media (max-width:900px){.mgroup{grid-template-columns:minmax(0,1fr)}.mgroup__head{position:static}}
+@media (max-width:620px){.mgroup__list{grid-template-columns:minmax(0,1fr)}}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.mark{flex:none;display:grid;place-items:center;width:15px;height:15px;margin-top:5px;border:1.5px solid var(--veg);border-radius:2px;background:var(--chalk)}
+.mark::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--veg)}
+.mark--nv{border-color:var(--nonveg)}
+.mark--nv::after{width:0;height:0;border-radius:0;background:none;border-left:4.5px solid transparent;border-right:4.5px solid transparent;border-bottom:7px solid var(--nonveg)}
+
+/* A dish: name ····· price on top, Hindi name and the Add control below (the delivery-app pattern) */
+.dish{display:grid;grid-template-columns:15px minmax(0,1fr);gap:0 12px;align-items:start}
+.dish__main{display:grid;gap:6px;min-width:0}
+.dish__top{display:flex;align-items:flex-start;gap:10px}
+.dish__name{flex:0 1 auto;min-width:0;font-size:17.5px;font-weight:500;line-height:1.35}
+.dish__lead{flex:1 1 16px;min-width:16px;margin-top:17px;border-bottom:1px dotted var(--brass-dim)}
+.dish__price{flex:none;font:500 17px/1.35 var(--f-body);font-variant-numeric:tabular-nums;white-space:nowrap}
+.dish__price i{font-style:normal;margin-inline:4px;color:var(--moss)}
+.dish__bottom{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.dish__meta{display:grid;gap:6px;justify-items:start;min-width:0}
+.dish__sub{font-size:14px;line-height:1.4;color:var(--moss)}
+.tag{display:inline-flex;align-items:center;gap:6px;padding:1px 9px;border:1px solid var(--brass-dim);border-radius:999px;font:500 10.5px/1.7 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--brass);white-space:nowrap}
+.tag::before,.fchip .tagdot{content:"";width:5px;height:5px;transform:rotate(45deg);background:var(--brass)}
+.add{flex:none;display:grid;justify-items:center;gap:3px}
+.add small{font-size:10.5px;letter-spacing:.06em;color:var(--moss)}
+.add__btn,.step{display:inline-flex;align-items:center;justify-content:center;min-width:96px;height:34px;border:1px solid var(--brass);border-radius:4px;font:600 13px/1 var(--f-body)}
+.add__btn{appearance:none;gap:6px;padding:0 14px;background:var(--night-2);color:var(--brass);letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:background-color .25s,color .25s}
+.add__btn:hover{background:var(--brass);color:var(--night)}
+.add__btn span{font-size:17px;letter-spacing:0}
+.step{justify-content:space-between;background:var(--brass);color:var(--night)}
+.step button{appearance:none;width:32px;height:100%;border:0;background:none;color:inherit;font:600 18px/1 var(--f-body);cursor:pointer}
+.step span{min-width:20px;text-align:center;font-size:14px;font-variant-numeric:tabular-nums}
+.add.bump .add__btn,.add.bump .step{animation:bump .35s ease}
+@keyframes bump{40%{transform:scale(1.08)}}
+
+/* Search + filters */
+.menu__tools{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:14px}
+.search{position:relative;flex:1 1 240px;min-width:0;max-width:380px}
+.search svg{position:absolute;left:14px;top:50%;width:17px;height:17px;transform:translateY(-50%);color:var(--moss);pointer-events:none}
+.search input{width:100%;height:42px;padding:0 16px 0 40px;border:1px solid var(--brass-dim);border-radius:999px;background:var(--night-2);color:var(--chalk);font:400 15px var(--f-body)}
+.search input::placeholder{color:var(--moss);opacity:.85}
+.search input:focus{outline:none;border-color:var(--brass)}
+.fchip{appearance:none;display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 16px;border:1px solid var(--brass-dim);border-radius:999px;background:none;color:var(--chalk);font:500 14px/1 var(--f-body);cursor:pointer;transition:border-color .25s,background-color .25s}
+.fchip:hover{border-color:var(--brass)}
+.fchip[aria-pressed="true"]{border-color:var(--brass);background:var(--night-2)}
+.fchip .mark{margin-top:0}
+.fchip .tagdot{display:block}
+.fchip__x{display:none;margin-left:2px;font-size:16px;line-height:1;color:var(--brass)}
+.fchip[aria-pressed="true"] .fchip__x{display:inline}
+.menu__empty{display:grid;justify-items:start;gap:14px;padding-block:44px;color:var(--moss)}
+.menu__empty p{margin:0;font-size:18px}
+
+/* Delivery-app links */
+.apps{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin:0;font-size:14px;color:var(--moss)}
+.applink{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 15px;border:1px solid var(--brass-dim);border-radius:999px;color:var(--chalk);font:500 14px/1 var(--f-body);text-decoration:none;transition:border-color .25s}
+.applink:hover{border-color:var(--brass)}
+.applink::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--app)}
+.applink--zomato{--app:var(--zomato)}
+.applink--swiggy{--app:var(--swiggy)}
+
+/* "Coming soon" badge for the delivery apps, until their links are in CONFIG */
+.soon{display:inline-flex;align-items:center;gap:10px;justify-self:start;margin:0;padding:7px 15px 7px 11px;border:1px dashed var(--brass);border-radius:999px;font:400 14px/1.2 var(--f-body);color:var(--chalk)}
+.soon b{margin-right:2px;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--brass)}
+.soon__dots{display:inline-flex}
+.soon__dots i{width:10px;height:10px;border-radius:50%;box-shadow:0 0 0 2px var(--night)}
+.soon__dots i+i{margin-left:-3px}
+#soonZ{background:var(--zomato)}
+#soonS{background:var(--swiggy)}
+
+/* Choose half or full: a sheet like the apps' "customise" step */
+.sheet{width:min(440px,calc(100% - 32px));max-height:min(84vh,600px);padding:0;border:1px solid var(--brass);border-radius:8px;background:var(--night-2);color:var(--chalk);box-shadow:var(--shadow)}
+.sheet::backdrop{background:var(--scrim)}
+.sheet[open]{animation:obarIn .35s cubic-bezier(.2,.7,.2,1)}
+.sheet__in{display:grid;gap:16px;padding:20px}
+.sheet__head{display:grid;grid-template-columns:15px minmax(0,1fr) auto;gap:12px;align-items:start}
+.sheet__head h3{font:400 24px/1.15 var(--f-display)}
+.sheet__head p{margin:4px 0 0;font-size:14px;color:var(--moss)}
+.sheet__x{appearance:none;width:34px;height:34px;border:1px solid var(--brass-dim);border-radius:50%;background:none;color:var(--chalk);font:400 20px/1 var(--f-body);cursor:pointer}
+.opts{display:grid;gap:8px}
+.opt{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--brass-dim);border-radius:6px;font-size:16px;cursor:pointer}
+.opt:has(input:checked){border-color:var(--brass);background:color-mix(in srgb,var(--brass) 10%,transparent)}
+.opt input{width:18px;height:18px;margin:0;accent-color:var(--brass)}
+.opt span{flex:1}
+.opt b{font-weight:500;font-variant-numeric:tabular-nums}
+.sheet__foot{display:flex;align-items:center;gap:12px}
+.sheet__foot .btn{flex:1}
+@media (max-width:560px){.sheet{width:100%;max-width:100%;margin:auto 0 0;border-bottom:0;border-radius:14px 14px 0 0;padding-bottom:env(safe-area-inset-bottom,0px)}}
+
+/* Promise */
+.promise__in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(36px,6vw,96px);align-items:start}
+.promise__statement{display:grid;gap:18px}
+.promise__list{display:grid;gap:28px;margin:0;padding:0;list-style:none}
+.promise__item{display:grid;grid-template-columns:56px minmax(0,1fr);gap:20px;align-items:start;padding-bottom:28px;border-bottom:1px solid var(--brass-dim)}
+.promise__item:last-child{padding-bottom:0;border-bottom:0}
+.promise__item svg{width:56px;height:56px}
+.promise__item h3{margin-bottom:4px;font:400 24px/1.2 var(--f-display)}
+.promise__item p{margin:0;color:var(--moss)}
+@media (max-width:880px){.promise__in{grid-template-columns:minmax(0,1fr)}}
+
+/* Makers: arched frames, like a jharokha window */
+.makers__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(28px,4vw,56px)}
+.maker{display:grid;gap:18px;align-content:start}
+.maker__frame{position:relative;aspect-ratio:4/5;max-width:100%;overflow:hidden;border:1px solid var(--brass);border-radius:50% 50% 6px 6px/36% 36% 6px 6px;background:radial-gradient(circle at 50% 42%,var(--night-2),var(--night) 72%)}
+.maker__frame::after{content:"";position:absolute;inset:8px;border:1px solid var(--brass-dim);border-radius:inherit;pointer-events:none}
+.maker__frame img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(1) sepia(.3) contrast(1.05);transition:filter .7s ease}
+.maker:hover .maker__frame img{filter:none}
+.maker__frame svg{position:absolute;inset:0;width:100%;height:100%}
+.maker__text{display:grid;gap:8px;min-width:0}
+.maker__name{font:400 28px/1.1 var(--f-display)}
+.maker__role{margin:0;font:500 12px/1.4 var(--f-body);letter-spacing:.16em;text-transform:uppercase;color:var(--brass)}
+.maker__role span{margin-left:6px;font:400 15px/1 var(--f-accent);letter-spacing:0;text-transform:none}
+.maker__bio{margin:0;font-size:16px;color:var(--moss)}
+@media (max-width:820px){
+  .makers__grid{grid-template-columns:minmax(0,1fr)}
+  .maker{grid-template-columns:minmax(0,120px) minmax(0,1fr);align-items:center;gap:0 20px}
+}
+
+/* Find */
+.find__in{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(36px,6vw,96px);align-items:center}
+.compass{display:grid;gap:14px;justify-items:center;margin:0}
+.compass svg{width:100%;max-width:420px;height:auto;overflow:visible}
+.compass figcaption{font-size:14px;letter-spacing:.22em;color:var(--moss);font-variant-numeric:tabular-nums}
+.compass .ripple{fill:none;stroke:var(--brass);stroke-width:1;opacity:.25;transform-box:fill-box;transform-origin:center;animation:ripple 4.4s cubic-bezier(.2,.6,.3,1) infinite}
+.compass .ripple--2{animation-delay:2.2s}
+@keyframes ripple{from{transform:scale(.12);opacity:.9}to{transform:scale(1);opacity:0}}
+.compass .dir{font:400 19px var(--f-accent);fill:var(--brass);text-anchor:middle;dominant-baseline:middle}
+.find__info{display:grid;gap:20px;min-width:0}
+address{font-size:20px;font-style:normal;line-height:1.5}
+.find__actions{display:flex;flex-wrap:wrap;gap:12px}
+.find__live{margin:0;font-size:15px;color:var(--moss)}
+.find__live a{color:var(--brass);text-underline-offset:3px}
+.contact{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px}
+.phone{margin:0;font-size:15px;color:var(--moss)}
+.phone a{margin-left:6px;font-size:19px;font-weight:500;color:var(--chalk);text-decoration:none;user-select:all;font-variant-numeric:tabular-nums}
+.hours{display:grid;gap:12px;margin-top:6px;padding-top:22px;border-top:1px solid var(--brass-dim)}
+.hours__head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.hours__head h3{font:400 26px/1 var(--f-display)}
+.hours dl{display:grid;margin:0}
+.hours__row{display:flex;justify-content:space-between;gap:16px;padding-block:7px;border-bottom:1px dotted var(--brass-dim);color:var(--moss);font-variant-numeric:tabular-nums}
+.hours__row dt,.hours__row dd{margin:0}
+.hours__row.is-today{color:var(--chalk)}
+.hours__row.is-today dt{color:var(--brass)}
+.hours__row em{margin-left:8px;font:italic 400 14px var(--f-accent);color:var(--brass)}
+.hours__hi{margin-left:4px;font-family:var(--f-accent);font-size:.94em;opacity:.85}
+@media (max-width:880px){.find__in{grid-template-columns:minmax(0,1fr)}.compass svg{max-width:320px}}
+
+/* Contact & reviews: the form writes a WhatsApp message to the cart */
+.contact__in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(36px,6vw,88px);align-items:start}
+.contact__intro{display:grid;gap:20px;justify-items:start}
+.contact__list{display:grid;gap:12px;max-width:34em;margin:0;padding:0;list-style:none;font-size:16px;color:var(--moss)}
+.contact__list li{position:relative;padding-left:24px}
+.contact__list li::before{content:"";position:absolute;left:0;top:.8em;width:12px;height:1px;background:var(--brass)}
+.contact__list b,.contact__list a{font-weight:500;color:var(--chalk)}
+.contact__list a{text-decoration:none}
+.cform{display:grid;gap:18px;padding:clamp(20px,3vw,32px);border:1px solid var(--brass-dim);border-radius:6px;background:var(--night-2)}
+.cform .optional{font-style:normal;opacity:.75}
+.cform textarea{min-height:124px;resize:vertical}
+.ctype{display:flex;flex-wrap:wrap;gap:8px}
+.ctype label{position:relative}
+.ctype input,.stars input{position:absolute;opacity:0;pointer-events:none}
+.ctype span{display:inline-flex;align-items:center;height:38px;padding:0 16px;border:1px solid var(--brass-dim);border-radius:999px;color:var(--chalk);font:500 14px/1 var(--f-body);letter-spacing:0;cursor:pointer;transition:background-color .25s,border-color .25s}
+.ctype span:hover{border-color:var(--brass)}
+.ctype input:checked+span{background:var(--brass);border-color:var(--brass);color:var(--night)}
+.ctype input:focus-visible+span,.stars input:focus-visible+label{outline:2px solid var(--brass);outline-offset:2px}
+.stars{display:inline-flex;flex-direction:row-reverse;justify-content:flex-end;gap:4px}
+.stars label{line-height:0;border-radius:4px;cursor:pointer}
+.stars svg{width:30px;height:30px}
+.stars path{fill:transparent;stroke:var(--brass);stroke-width:1.4;stroke-linejoin:round;transition:fill .2s}
+.stars input:checked~label path,.stars label:hover path,.stars label:hover~label path{fill:var(--brass)}
+.cform__actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px}
+.cerr{margin:0;font-size:14px;color:var(--alert)}
+.cdone{margin:0;font-size:14px;color:var(--moss)}
+@media (max-width:880px){.contact__in{grid-template-columns:minmax(0,1fr)}}
+
+/* Footer */
+.foot{position:relative;padding-block:clamp(48px,8vw,96px) clamp(32px,4vw,48px);border-top:1px solid var(--brass-dim)}
+.wordmark{margin:0;padding-top:.06em;font:400 clamp(120px,30vw,400px)/1.25 var(--f-display);text-align:center;color:transparent;
+  background:repeating-linear-gradient(180deg,var(--brass) 0 1.5px,transparent 1.5px 6px);-webkit-background-clip:text;background-clip:text;transition:background-position 1.4s cubic-bezier(.6,0,.2,1)}
+.wordmark:hover{background-position:0 -36px}
+.foot__row{display:grid;justify-items:start;gap:14px;margin-top:clamp(20px,4vw,40px);font-size:14px;color:var(--moss);text-align:left}
+.foot__contact span{display:block}
+.foot__row p{margin:0}
+.foot__row b{font-weight:500;color:var(--chalk)}
+body.has-order .foot{padding-bottom:150px}
+
+/* The thread */
+.thread{position:absolute;left:0;top:0;z-index:0;pointer-events:none;overflow:visible}
+.thread__guide{fill:none;stroke:var(--brass);stroke-opacity:.22;stroke-width:1;stroke-dasharray:1 7;stroke-linecap:round}
+.thread__line{fill:none;stroke:var(--brass);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.thread__wheel{filter:drop-shadow(0 0 6px var(--glow-soft))}
+.thread__wheel circle{fill:var(--night);stroke:var(--brass);stroke-width:1.5}
+.thread__wheel path{stroke:var(--brass);stroke-width:1.1}
+.thread__wheel .hub{fill:var(--brass);stroke:none}
+
+/* Order bar */
+.obar{position:fixed;left:0;right:0;bottom:0;z-index:50;padding:12px var(--gutter) calc(12px + env(safe-area-inset-bottom,0px));pointer-events:none}
+.obar__box{max-width:640px;margin-inline:auto;pointer-events:auto;background:var(--night-2);border:1px solid var(--brass);border-radius:4px;box-shadow:var(--shadow);animation:obarIn .5s cubic-bezier(.2,.7,.2,1)}
+@keyframes obarIn{from{opacity:0;transform:translateY(24px)}}
+.obar__panel{display:grid;gap:14px;max-height:min(58vh,520px);overflow:auto;padding:18px 18px 16px;border-bottom:1px solid var(--brass-dim)}
+.obar__head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.obar__head h3{font:400 24px/1 var(--f-display)}
+.linkbtn{appearance:none;padding:4px 0;border:0;background:none;color:var(--moss);font:500 14px var(--f-body);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.olist{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.oline{display:grid;grid-template-columns:minmax(0,1fr) auto 64px;gap:12px;align-items:center;font-size:15px}
+.oline em{margin-left:6px;font-style:normal;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass)}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--brass-dim);border-radius:3px}
+.qty button{appearance:none;width:30px;height:30px;border:0;background:none;color:var(--chalk);font:500 17px/1 var(--f-body);cursor:pointer}
+.qty span{min-width:20px;text-align:center;font-variant-numeric:tabular-nums}
+.oline__amt{text-align:right;font-variant-numeric:tabular-nums}
+.ofields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px}
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:3px;padding:3px;border:1px solid var(--brass-dim);border-radius:6px}
+.seg label{position:relative;display:grid;place-items:center;min-height:38px;padding:4px 8px;border-radius:4px;color:var(--moss);font:500 14px/1.2 var(--f-body);letter-spacing:0;text-align:center;cursor:pointer}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label:has(input:checked){background:var(--brass);color:var(--night)}
+.seg label:has(input:focus-visible){outline:2px solid var(--brass);outline-offset:2px}
+.upi{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;font-size:14px;color:var(--moss)}
+.upi b{font-weight:500;color:var(--chalk);user-select:all}
+.nudge{margin:0;padding:9px 12px;border-radius:4px;background:color-mix(in srgb,var(--brass) 14%,transparent);color:var(--chalk);font-size:14px}
+.bill{display:grid;gap:6px;padding-top:12px;border-top:1px dashed var(--brass-dim);font-size:14px;color:var(--moss)}
+.bill div{display:flex;justify-content:space-between;gap:12px;font-variant-numeric:tabular-nums}
+.bill s{margin-right:6px;opacity:.7}
+.bill .bill__total{margin-top:4px;padding-top:9px;border-top:1px solid var(--brass-dim);font-size:16px;font-weight:600;color:var(--chalk)}
+#osend[aria-disabled="true"]{opacity:.55;cursor:not-allowed}
+.field{display:grid;gap:6px;font-size:13px;letter-spacing:.04em;color:var(--moss)}
+.field select,.field input,.field textarea{width:100%;min-width:0;padding:10px 12px;border:1px solid var(--brass-dim);border-radius:3px;background:var(--night);color:var(--chalk);font:400 15px/1.5 var(--f-body)}
+.field select:focus,.field input:focus,.field textarea:focus{outline:none;border-color:var(--brass)}
+.ofine{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;margin:0;font-size:13px;color:var(--moss)}
+.obar__bar{display:flex;align-items:center;gap:10px;padding:10px}
+.obar__sum{flex:1;min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;padding:6px 8px;border:0;background:none;color:var(--chalk);font:inherit;text-align:left;cursor:pointer}
+.obar__sum b{font-weight:600;font-variant-numeric:tabular-nums}
+.obar__sum small{font-size:13px;letter-spacing:.04em;color:var(--brass);text-decoration:underline;text-underline-offset:3px}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .steam{stroke-dasharray:none;opacity:.4}
+  .thread__wheel{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="top" id="header">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Thela, back to top">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><g class="logo-wheel"><circle cx="16" cy="16" r="13.5"/><path d="M16 4v24M4 16h24M7.5 7.5l17 17M7.5 24.5l17-17"/></g><circle class="hub" cx="16" cy="16" r="2.4"/></svg>
+      <span class="logo__text"><span class="logo__hi" lang="hi">ठेला</span><span class="logo__en">Thela · Purnia</span></span>
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#favourites">Favourites</a>
+      <a href="#menu">Menu</a>
+      <a href="#makers">Makers</a>
+      <a href="#find">Find us</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn--sm" href="#menu">Order ahead</a>
+  </div>
+</header>
+
+<main class="page" id="top">
+  <svg class="thread" aria-hidden="true">
+    <path class="thread__guide"/>
+    <path class="thread__line"/>
+    <g class="thread__wheel">
+      <circle r="11"/>
+      <path d="M-11 0H11M0-11V11M-7.8-7.8 7.8 7.8M-7.8 7.8 7.8-7.8"/>
+      <circle class="hub" r="2.4"/>
+    </g>
+  </svg>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero__copy">
+        <div class="hero__top" style="--i:0">
+          <p class="eyebrow">Fast food cart · Purnia, Bihar</p>
+          <span class="chip" data-status>Open daily · 4:00 PM – 10:30 PM</span>
+        </div>
+        <h1 style="--i:1">Street food, done <span class="swash">properly.<svg viewBox="0 0 300 26" aria-hidden="true"><path class="d" pathLength="1" style="--d:1.15s" d="M6 17C70 9 170 5 294 11"/><path class="d thin" pathLength="1" style="--d:1.45s" d="M40 23C110 17 200 16 262 19"/></svg></span></h1>
+        <p class="lead" style="--i:2">Momos, rolls, chowmein and burgers, cooked to order on our cart every evening in Purnia.</p>
+        <div class="hero__cta" style="--i:3">
+          <a class="btn" href="#menu">Order ahead <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="btn btn--ghost" href="#find">Find the cart</a>
+        </div>
+        <ul class="hero__meta" style="--i:4">
+          <li>Pay by UPI or cash</li>
+          <li>Veg and non-veg</li>
+          <li data-needs="delivery" hidden>Pickup or home delivery</li>
+          <li data-needs="apps" hidden data-cfg="appsLine">Also on Zomato and Swiggy</li>
+        </ul>
+      </div>
+
+      <div class="hero__art">
+        <svg class="cart" viewBox="0 0 680 440" role="img" aria-label="Line drawing of our food cart rolling down the street at dusk: a chef cooks on the tawa and holds out a plate of momos, a street cat walks alongside, and a bulb glows under the striped awning">
+          <defs>
+            <radialGradient id="bulbGlow">
+              <stop offset="0" style="stop-color:var(--glow);stop-opacity:.42"/>
+              <stop offset=".3" style="stop-color:var(--glow);stop-opacity:.13"/>
+              <stop offset="1" style="stop-color:var(--glow);stop-opacity:0"/>
+            </radialGradient>
+            <linearGradient id="edgeFade">
+              <stop offset="0" stop-color="#000"/>
+              <stop offset=".14" stop-color="#fff"/>
+              <stop offset=".86" stop-color="#fff"/>
+              <stop offset="1" stop-color="#000"/>
+            </linearGradient>
+            <mask id="roadMask" maskUnits="userSpaceOnUse" x="0" y="0" width="680" height="440">
+              <rect width="680" height="440" fill="url(#edgeFade)"/>
+            </mask>
+            <!-- One 680-wide stretch of street. Each is drawn twice, side by side, so it can loop. -->
+            <g id="streetTile" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M90 412V176Q90 162 104 162H120M114 162h12l4 9h-20z"/>
+              <path d="M300 412V338M300 362l-10-10M300 354l9-9M300 338C276 340 268 316 282 306C276 286 300 274 314 286C330 276 346 296 336 310C350 322 336 342 314 336"/>
+              <path d="M470 412V352H530V412M464 354 500 326 536 354M490 412V382H508V412M548 412V370H604V412M544 372 552 358H600L608 372"/>
+            </g>
+            <g id="roadTile" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round">
+              <path d="M20 424H70M170 427H196M300 423H352M450 426H470M560 424H612"/>
+            </g>
+          </defs>
+          <circle class="glow" cx="330" cy="154" r="320" fill="url(#bulbGlow)"/>
+
+          <!-- the street slides past: far scenery slowly, the road texture at the cart's speed -->
+          <g class="street" mask="url(#roadMask)" aria-hidden="true">
+            <g class="slide slide--far"><use href="#streetTile"/><use href="#streetTile" x="680"/></g>
+          </g>
+          <g class="road" mask="url(#roadMask)" aria-hidden="true">
+            <g class="slide"><use href="#roadTile"/><use href="#roadTile" x="680"/></g>
+          </g>
+
+          <!-- ground -->
+          <path class="d" pathLength="1" style="--d:.05s;--t:1.5s" d="M6 412H680"/>
+
+          <!-- wheels: spin at the road's speed -->
+          <g class="wheel">
+            <path class="d" pathLength="1" style="--d:.25s" d="M144 354a56 56 0 1 0 112 0a56 56 0 1 0-112 0"/>
+            <path class="d thin" pathLength="1" style="--d:.4s" d="M152 354a48 48 0 1 0 96 0a48 48 0 1 0-96 0"/>
+            <path class="d thin" pathLength="1" style="--d:.55s" d="M200 306V402M152 354H248M166.1 320.1 233.9 387.9M166.1 387.9 233.9 320.1"/>
+            <path class="d" pathLength="1" style="--d:.8s" d="M193 354a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/>
+          </g>
+          <g class="wheel">
+            <path class="d" pathLength="1" style="--d:.35s" d="M396 354a56 56 0 1 0 112 0a56 56 0 1 0-112 0"/>
+            <path class="d thin" pathLength="1" style="--d:.5s" d="M404 354a48 48 0 1 0 96 0a48 48 0 1 0-96 0"/>
+            <path class="d thin" pathLength="1" style="--d:.65s" d="M452 306V402M404 354H500M418.1 320.1 485.9 387.9M418.1 387.9 485.9 320.1"/>
+            <path class="d" pathLength="1" style="--d:.9s" d="M445 354a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/>
+          </g>
+
+          <!-- everything on the springs bobs a little as the cart rolls -->
+          <g class="bob">
+            <path class="d" pathLength="1" style="--d:.75s" d="M186 296 200 354 214 296M438 296 452 354 466 296"/>
+
+            <!-- body, handle, counter -->
+            <path class="d solid" pathLength="1" style="--d:.6s" d="M120 236H540V296H120Z"/>
+            <path class="d thin" pathLength="1" style="--d:.85s" d="M138 248H522V284H138Z"/>
+            <path class="d thin" pathLength="1" style="--d:1.2s" d="M156 266H272M272 266l6-5 6 5-6 5zM376 266l6-5 6 5-6 5zM388 266H504"/>
+            <text class="cart-name" x="330" y="277" text-anchor="middle" lang="hi">ठेला</text>
+            <path class="d" pathLength="1" style="--d:.9s" d="M120 246 60 236M120 270 60 236M60 236H42"/>
+            <path class="d solid" pathLength="1" style="--d:.9s" d="M106 226H554V236H106Z"/>
+
+            <!-- posts, awning, roof, flag -->
+            <path class="d" pathLength="1" style="--d:1.1s" d="M128 226V116M532 226V116"/>
+            <path class="d" pathLength="1" style="--d:1.25s" d="M92 86H568"/>
+            <path class="d" pathLength="1" style="--d:1.3s;--t:1.4s" d="M100 86V104q23 26 46 0q23 26 46 0q23 26 46 0q23 26 46 0q23 26 46 0q23 26 46 0q23 26 46 0q23 26 46 0q23 26 46 0q23 26 46 0V86"/>
+            <path class="d thin" pathLength="1" style="--d:1.6s" d="M146 86V104M192 86V104M238 86V104M284 86V104M330 86V104M376 86V104M422 86V104M468 86V104M514 86V104"/>
+            <path class="d" pathLength="1" style="--d:1.4s" d="M92 86Q330 34 568 86"/>
+            <path class="d" pathLength="1" style="--d:1.8s" d="M330 60V26"/>
+            <g class="flag"><path class="d" pathLength="1" style="--d:1.95s" d="M330 26 360 34 330 42"/></g>
+
+            <!-- momo steamer -->
+            <path class="d" pathLength="1" style="--d:1.4s" d="M188 226V206H272V226"/>
+            <path class="d" pathLength="1" style="--d:1.5s" d="M191 206V186H269V206"/>
+            <path class="d" pathLength="1" style="--d:1.6s" d="M194 186V166H266V186"/>
+            <path class="d thin" pathLength="1" style="--d:1.7s" d="M188 216H272M191 196H269M194 176H266"/>
+            <path class="d" pathLength="1" style="--d:1.75s" d="M194 166Q230 140 266 166"/>
+            <path class="d" pathLength="1" style="--d:1.9s" d="M226 152Q230 144 234 152"/>
+            <path class="steam" pathLength="1" style="--d:2.6s" d="M214 142c-6-8 6-14 0-22c-6-8 6-14 0-22c-6-8 6-14 0-22"/>
+            <path class="steam" pathLength="1" style="--d:3.4s" d="M232 140c-6-8 6-14 0-22c-6-8 6-14 0-22c-6-8 6-14 0-22"/>
+            <path class="steam" pathLength="1" style="--d:3s" d="M250 142c-6-8 6-14 0-22c-6-8 6-14 0-22c-6-8 6-14 0-22"/>
+
+            <!-- jar and sauce bottle -->
+            <path class="d" pathLength="1" style="--d:1.8s" d="M142 226V206Q142 200 148 200H164Q170 200 170 206V226M145 200V194H167V200"/>
+            <path class="d thin" pathLength="1" style="--d:2s" d="M148 212H164"/>
+            <path class="d" pathLength="1" style="--d:1.85s" d="M290 226V206Q290 199 296 197V186H300V197Q306 199 306 206V226M295 186V182H301V186"/>
+
+            <!-- the chef: spatula on the tawa in one hand, a plate of momos held out in the other -->
+            <g class="chef" transform="translate(455 226)">
+              <path class="d" pathLength="1" style="--d:1.85s" d="M-20 -24L-22 -52Q-22 -62 -10 -64H10Q22 -62 22 -52L20 -24"/>
+              <path class="d thin" pathLength="1" style="--d:2.1s" d="M3 -62V-26M-7 -52a1.3 1.3 0 1 0 2.6 0a1.3 1.3 0 1 0-2.6 0M-7 -42a1.3 1.3 0 1 0 2.6 0a1.3 1.3 0 1 0-2.6 0"/>
+              <path class="d thin" pathLength="1" style="--d:2s" d="M-7 -64Q0 -57 7 -64M0 -59l-3 6M0 -59l3 6"/>
+              <path class="d" pathLength="1" style="--d:1.95s" d="M-10 -74a10 10 0 1 0 20 0a10 10 0 1 0-20 0"/>
+              <path class="d thin" pathLength="1" style="--d:2.2s" d="M-6 -70q3 2 6 0q3 2 6 0"/>
+              <path class="d" pathLength="1" style="--d:2.05s" d="M-9 -83H9V-88H-9ZM-8 -88C-15 -90 -14 -100 -6 -98C-4 -104 5 -104 7 -98C15 -100 15 -90 8 -88"/>
+              <g class="arm-l"><path class="d" pathLength="1" style="--d:2.1s" d="M-19 -58Q-30 -48 -30 -38L-22 -30M-22 -30-46 -22M-46 -22l-8 2"/></g>
+              <g class="arm-r">
+                <path class="d" pathLength="1" style="--d:2.1s" d="M19 -58Q32 -52 34 -44L46 -46"/>
+                <path class="d" pathLength="1" style="--d:2.25s" d="M40 -48a14 3.5 0 1 0 28 0a14 3.5 0 1 0-28 0"/>
+                <path class="d thin" pathLength="1" style="--d:2.35s" d="M46 -50q4-7 8 0M54 -50q4-7 8 0"/>
+              </g>
+              <path class="steam" pathLength="1" style="--d:3.2s" d="M50 -60c-4-6 4-10 0-16c-4-6 4-10 0-16"/>
+              <path class="steam" pathLength="1" style="--d:3.9s" d="M58 -60c-4-6 4-10 0-16c-4-6 4-10 0-16"/>
+            </g>
+
+            <!-- tawa with a roll on it -->
+            <path class="d" pathLength="1" style="--d:1.7s" d="M408 217V226M472 217V226"/>
+            <path class="d" pathLength="1" style="--d:1.75s" d="M366 212H514Q440 228 366 212ZM366 212 352 206M514 212 528 206"/>
+            <path class="d" pathLength="1" style="--d:2s" d="M412 204H468Q474 208 468 212H412Q406 208 412 204Z"/>
+            <g class="flame"><path class="d thin" pathLength="1" style="--d:2.1s" d="M424 225q3-6 6 0q3-6 6 0q3-6 6 0q3-6 6 0"/></g>
+            <path class="steam" pathLength="1" style="--d:2.8s" d="M416 200c-5-7 5-12 0-19c-5-7 5-12 0-19c-5-7 5-12 0-19"/>
+
+            <!-- bulb -->
+            <path class="d" pathLength="1" style="--d:1.8s" d="M330 104V130"/>
+            <path class="d" pathLength="1" style="--d:1.95s" d="M324 130H336V138H324Z"/>
+            <path class="bulb-fill" d="M325 138C312 146 313 168 330 168C347 168 348 146 335 138Z"/>
+            <path class="d" pathLength="1" style="--d:2.05s" d="M325 138C312 146 313 168 330 168C347 168 348 146 335 138"/>
+            <path class="d thin" pathLength="1" style="--d:2.2s" d="M326 152q2-5 4 0q2 5 4 0"/>
+
+            <!-- menu sign hanging off the post, swinging as the cart rolls -->
+            <path class="d" pathLength="1" style="--d:1.9s" d="M532 132H588"/>
+            <g class="sign">
+              <path class="d thin" pathLength="1" style="--d:2s" d="M546 132V146M574 132V146"/>
+              <path class="d" pathLength="1" style="--d:2.05s" d="M536 146H584V182H536Z"/>
+              <text class="board-t" x="560" y="161" text-anchor="middle">MOMO</text>
+              <text class="board-t" x="560" y="175" text-anchor="middle">₹40</text>
+            </g>
+          </g>
+
+          <!-- a little cat walking alongside -->
+          <g class="cat" transform="translate(586 412)" aria-hidden="true">
+            <g class="cat__wander">
+              <g class="cat__far">
+                <path class="cat__leg cat__leg--b" d="M7.5 -14V-2.5a2.5 2.5 0 0 0 5 0V-14"/>
+                <path class="cat__leg " d="M-22.5 -14V-2.5a2.5 2.5 0 0 0 5 0V-14"/>
+              </g>
+              <path class="cat__leg " d="M13.5 -14V-2.5a2.5 2.5 0 0 0 5 0V-14"/>
+              <path class="cat__leg cat__leg--b" d="M-16.5 -14V-2.5a2.5 2.5 0 0 0 5 0V-14"/>
+              <g class="cat__bob">
+                <path class="cat__tail" d="M-25 -20C-36 -22 -38 -36 -32 -44C-29 -48 -24 -46 -26 -42"/>
+                <path d="M-26 -14C-30 -26 -18 -34 0 -33C14 -33 24 -30 26 -20C27 -13 20 -10 8 -10H-14C-22 -10 -25 -11 -26 -14Z"/>
+                <g class="cat__head">
+                  <path d="M18.5 -41 18 -52 25.5 -45.2Z"/>
+                  <path d="M28.5 -45.6 35 -52 36.6 -40Z"/>
+                  <path d="M16 -35a11 11 0 1 0 22 0a11 11 0 1 0-22 0"/>
+                  <path class="cat__line" d="M28.5 -37q2.4-2.4 4.8 0"/>
+                  <path class="cat__nose" d="M36.8 -34.2h2.2l-1.1 1.5z"/>
+                  <path class="cat__line" d="M37.9 -32.7q-.4 1.6-2 1.4"/>
+                  <path class="cat__whisker" d="M35 -31.5 45 -30M35 -32.5 45.5 -34"/>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker" aria-label="On the menu tonight">
+    <div class="ticker__track">
+      <div class="ticker__item"><span class="ticker__en">Momos</span><span class="ticker__hi" lang="hi">मोमो</span><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1 13 7 7 13 1 7Z" fill="none" stroke="currentColor"/></svg></div>
+      <div class="ticker__item"><span class="ticker__en">Egg Roll</span><span class="ticker__hi" lang="hi">अंडा रोल</span><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1 13 7 7 13 1 7Z" fill="none" stroke="currentColor"/></svg></div>
+      <div class="ticker__item"><span class="ticker__en">Chowmein</span><span class="ticker__hi" lang="hi">चाउमीन</span><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1 13 7 7 13 1 7Z" fill="none" stroke="currentColor"/></svg></div>
+      <div class="ticker__item"><span class="ticker__en">Chilli Potato</span><span class="ticker__hi" lang="hi">चिली पोटैटो</span><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1 13 7 7 13 1 7Z" fill="none" stroke="currentColor"/></svg></div>
+      <div class="ticker__item"><span class="ticker__en">Burger</span><span class="ticker__hi" lang="hi">बर्गर</span><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1 13 7 7 13 1 7Z" fill="none" stroke="currentColor"/></svg></div>
+      <div class="ticker__item"><span class="ticker__en">Kulhad Chai</span><span class="ticker__hi" lang="hi">कुल्हड़ चाय</span><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1 13 7 7 13 1 7Z" fill="none" stroke="currentColor"/></svg></div>
+      <div class="ticker__item" aria-hidden="true"><span class="ticker__en">Momos</span><span class="ticker__hi" lang="hi">मोमो</span><svg viewBox="0 0 14 14"><path d="M7 1 13 7 7 13 1 7Z" fill="none" stroke="currentColor"/></svg></div>
+      <div class="ticker__item" aria-hidden="true"><span class="ticker__en">Egg Roll</span><span class="ticker__hi" lang="hi">अंडा रोल</span><svg viewBox="0 0 14 14"><path d="M7 1 13 7 7 13 1 7Z" fill="none" stroke="currentColor"/></svg></div>
+      <div class="ticker__item" aria-hidden="true"><span class="ticker__en">Chowmein</span><span class="ticker__hi" lang="hi">चाउमीन</span><svg viewBox="0 0 14 14"><path d="M7 1 13 7 7 13 1 7Z" fill="none" stroke="currentColor"/></svg></div>
+      <div class="ticker__item" aria-hidden="true"><span class="ticker__en">Chilli Potato</span><span class="ticker__hi" lang="hi">चिली पोटैटो</span><svg viewBox="0 0 14 14"><path d="M7 1 13 7 7 13 1 7Z" fill="none" stroke="currentColor"/></svg></div>
+      <div class="ticker__item" aria-hidden="true"><span class="ticker__en">Burger</span><span class="ticker__hi" lang="hi">बर्गर</span><svg viewBox="0 0 14 14"><path d="M7 1 13 7 7 13 1 7Z" fill="none" stroke="currentColor"/></svg></div>
+      <div class="ticker__item" aria-hidden="true"><span class="ticker__en">Kulhad Chai</span><span class="ticker__hi" lang="hi">कुल्हड़ चाय</span><svg viewBox="0 0 14 14"><path d="M7 1 13 7 7 13 1 7Z" fill="none" stroke="currentColor"/></svg></div>
+    </div>
+  </div>
+
+  <!-- FAVOURITES -->
+  <section class="sec" id="favourites" data-thread="right">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="eyebrow">Cart favourites</p>
+        <h2>Start with these four.</h2>
+        <p class="lead">On your first visit, these are the plates to try. Each one is cooked when you order it.</p>
+      </header>
+      <div class="sig__grid">
+        <article class="sig__card">
+          <svg class="sig__art" viewBox="0 0 200 160" data-draw data-anim role="img" aria-label="Line drawing of momos steaming in a bamboo steamer">
+            <path class="d" pathLength="1" d="M30 108a70 13 0 1 0 140 0a70 13 0 1 0-140 0"/>
+            <path class="d" pathLength="1" style="--d:.15s" d="M30 108 36 138Q100 156 164 138L170 108"/>
+            <path class="d thin" pathLength="1" style="--d:.3s" d="M33 123Q100 140 167 123"/>
+            <path class="d thin" pathLength="1" style="--d:.4s" d="M60 128V143M84 131V146M116 131V146M140 128V143"/>
+            <g class="momo">
+              <path class="d" pathLength="1" style="--d:0.5s" d="M46 106C42 90 54 80 64 76C74 80 86 90 82 106"/>
+              <path class="d thin" pathLength="1" style="--d:.85s" d="M64 76Q57 86 54 98M64 76Q64 88 64 100M64 76Q71 86 74 98"/>
+              <path class="d" pathLength="1" style="--d:1s" d="M60 75Q64 68 68 75"/>
+            </g>
+            <g class="momo momo--2">
+              <path class="d" pathLength="1" style="--d:0.6s" d="M82 100C78 84 90 74 100 70C110 74 122 84 118 100"/>
+              <path class="d thin" pathLength="1" style="--d:.85s" d="M100 70Q93 80 90 92M100 70Q100 82 100 94M100 70Q107 80 110 92"/>
+              <path class="d" pathLength="1" style="--d:1s" d="M96 69Q100 62 104 69"/>
+            </g>
+            <g class="momo momo--3">
+              <path class="d" pathLength="1" style="--d:0.7s" d="M118 106C114 90 126 80 136 76C146 80 158 90 154 106"/>
+              <path class="d thin" pathLength="1" style="--d:.85s" d="M136 76Q129 86 126 98M136 76Q136 88 136 100M136 76Q143 86 146 98"/>
+              <path class="d" pathLength="1" style="--d:1s" d="M132 75Q136 68 140 75"/>
+            </g>
+            <path class="steam" pathLength="1" style="--d:.4s" d="M66 66c-5-7 5-12 0-19c-5-7 5-12 0-19c-5-7 5-12 0-19"/>
+            <path class="steam" pathLength="1" style="--d:1.4s" d="M100 60c-5-7 5-12 0-19c-5-7 5-12 0-19c-5-7 5-12 0-19"/>
+            <path class="steam" pathLength="1" style="--d:.9s" d="M134 66c-5-7 5-12 0-19c-5-7 5-12 0-19c-5-7 5-12 0-19"/>
+          </svg>
+          <div class="sig__title"><h3 class="sig__name">Steamed Momos</h3><span class="sig__hi" lang="hi">मोमो</span></div>
+          <p>Thin wrappers and a juicy filling, served with red chutney we grind fresh every afternoon.</p>
+          <span class="sig__price">From ₹40</span>
+        </article>
+
+        <article class="sig__card">
+          <svg class="sig__art" viewBox="0 0 200 160" data-draw data-anim role="img" aria-label="Line drawing of a steaming egg roll wrapped in paper, with a green chilli and a lemon wedge">
+            <g class="roll-bob">
+              <path class="d" pathLength="1" d="M66 46a34 10 0 1 0 68 0a34 10 0 1 0-68 0"/>
+              <path class="d" pathLength="1" style="--d:.15s" d="M66 46V90M134 46V90"/>
+              <path class="d thin" pathLength="1" style="--d:.35s" d="M66 66Q100 76 134 66"/>
+              <path class="d thin" pathLength="1" style="--d:.45s" d="M76 44q6-6 12 0q6-6 12 0q6-6 12 0q6-6 12 0M86 47a5 3 0 1 0 10 0a5 3 0 1 0-10 0"/>
+              <path class="d" pathLength="1" style="--d:.5s" d="M60 92 70 84 80 92 90 84 100 92 110 84 120 92 130 84 140 92 136 142Q100 150 64 142Z"/>
+              <path class="d thin" pathLength="1" style="--d:.75s" d="M64 110Q100 120 136 110"/>
+              <path class="steam" pathLength="1" style="--d:.5s" d="M90 36c-4-6 4-10 0-16c-4-6 4-10 0-16"/>
+              <path class="steam" pathLength="1" style="--d:1.5s" d="M110 34c-4-6 4-10 0-16c-4-6 4-10 0-16"/>
+            </g>
+            <g class="chilli"><path class="d" pathLength="1" style="--d:.85s" d="M152 140C170 122 170 98 158 80C164 100 162 120 152 140ZM158 80q0-8 8-10"/></g>
+            <g class="lemon">
+              <path class="d" pathLength="1" style="--d:.95s" d="M14 142a22 22 0 0 1 44 0Z"/>
+              <path class="d thin" pathLength="1" style="--d:1.1s" d="M36 142 22 128M36 142V122M36 142 50 128"/>
+            </g>
+          </svg>
+          <div class="sig__title"><h3 class="sig__name">Egg Roll</h3><span class="sig__hi" lang="hi">अंडा रोल</span></div>
+          <p>A flaky paratha off the tawa with egg cooked onto it, rolled with onion, green chilli and lemon.</p>
+          <span class="sig__price">₹40</span>
+        </article>
+
+        <article class="sig__card">
+          <svg class="sig__art" viewBox="0 0 200 160" data-draw data-anim role="img" aria-label="Line drawing of chopsticks lifting noodles from a steaming bowl of chowmein">
+            <path class="d" pathLength="1" d="M28 92a72 12 0 1 0 144 0a72 12 0 1 0-144 0"/>
+            <path class="d" pathLength="1" style="--d:.15s" d="M28 92Q34 142 100 146Q166 142 172 92"/>
+            <path class="d thin" pathLength="1" style="--d:.3s" d="M40 112Q100 124 160 112"/>
+            <path class="d" pathLength="1" style="--d:.35s" d="M80 145 84 154H116L120 145"/>
+            <path class="d" pathLength="1" style="--d:.5s" d="M42 90C52 66 66 96 78 72S98 92 108 68S130 92 142 70S158 88 160 90"/>
+            <path class="d thin" pathLength="1" style="--d:.65s" d="M52 92C62 78 72 98 86 80S110 98 122 80S144 96 150 90"/>
+            <path class="d thin" pathLength="1" style="--d:1.05s" d="M70 84l4-3M90 87l4-3M132 84l4-3"/>
+            <g class="strands"><path class="d thin" pathLength="1" style="--d:.8s" d="M103 37C98 46 108 54 102 62C99 67 101 71 98 74M106 39C112 48 102 56 109 63C112 67 110 70 112 72"/></g>
+            <g class="sticks"><path class="d" pathLength="1" style="--d:.9s" d="M176 10 102 36M178 22 104 40"/></g>
+            <path class="steam" pathLength="1" style="--d:.6s" d="M58 76c-4-6 4-10 0-16c-4-6 4-10 0-16"/>
+            <path class="steam" pathLength="1" style="--d:1.7s" d="M146 76c-4-6 4-10 0-16c-4-6 4-10 0-16"/>
+          </svg>
+          <div class="sig__title"><h3 class="sig__name">Chowmein</h3><span class="sig__hi" lang="hi">चाउमीन</span></div>
+          <p>Tossed in the kadhai on a high flame. A little spicy and a little sour.</p>
+          <span class="sig__price">From ₹40</span>
+        </article>
+
+        <article class="sig__card">
+          <svg class="sig__art" viewBox="0 0 200 160" data-draw data-anim role="img" aria-label="Line drawing of chai in a clay kulhad with steam curling up">
+            <path class="d" pathLength="1" d="M62 62a38 9 0 1 0 76 0a38 9 0 1 0-76 0"/>
+            <path class="d thin" pathLength="1" style="--d:.2s" d="M68 63a32 6 0 1 0 64 0a32 6 0 1 0-64 0"/>
+            <ellipse class="chai-ripple" cx="100" cy="63" rx="26" ry="4.6"/>
+            <path class="d" pathLength="1" style="--d:.15s" d="M62 62 74 136Q100 146 126 136L138 62"/>
+            <path class="d thin" pathLength="1" style="--d:.35s" d="M66 86Q100 96 134 86M70 112Q100 121 130 112"/>
+            <path class="d" pathLength="1" style="--d:.5s" d="M40 144Q100 156 160 144"/>
+            <path class="d thin" pathLength="1" style="--d:.8s" d="M154 128q10-10 20 0q-10 10-20 0ZM158 128H170"/>
+            <path class="steam" pathLength="1" style="--d:.3s" d="M86 52c-6-8 6-13 0-21c-6-8 6-13 0-21"/>
+            <path class="steam" pathLength="1" style="--d:1.3s" d="M100 50c-6-8 6-13 0-21c-6-8 6-13 0-21"/>
+            <path class="steam" pathLength="1" style="--d:2.1s" d="M114 52c-6-8 6-13 0-21c-6-8 6-13 0-21"/>
+          </svg>
+          <div class="sig__title"><h3 class="sig__name">Kulhad Chai</h3><span class="sig__hi" lang="hi">कुल्हड़ चाय</span></div>
+          <p>Strong, milky chai poured into a clay cup. It goes well with a plate of momos.</p>
+          <span class="sig__price">₹15</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="sec" id="menu" data-thread="left">
+    <div class="wrap">
+      <div class="menu__intro">
+        <header class="sec-head">
+          <p class="eyebrow">The menu · <span lang="hi">मेन्यू</span></p>
+          <h2>Everything on the cart.</h2>
+          <p class="lead">Prices are in rupees. Where an item has two prices, the first is a half plate and the second a full plate.</p>
+        </header>
+        <div class="menu__how">
+          <ol class="steps" aria-label="How ordering works">
+            <li><span>Tap Add on the dishes you want.</span></li>
+            <li><span>Choose pickup<span data-needs="delivery" hidden> or delivery</span>, then send the order to us on WhatsApp.</span></li>
+            <li><span>Pay by UPI or cash. We confirm every order on WhatsApp.</span></li>
+          </ol>
+          <p class="legend"><span class="mark" aria-hidden="true"></span><span style="margin-left:0">Veg</span><span class="mark mark--nv" aria-hidden="true"></span><span style="margin-left:0">Non-veg, including egg</span></p>
+          <p class="apps" data-needs="apps" hidden>Prefer a delivery app?
+            <a class="applink applink--zomato" id="zomatoLink" data-needs="zomato" hidden href="https://www.zomato.com/" target="_blank" rel="noopener">Order on Zomato</a>
+            <a class="applink applink--swiggy" id="swiggyLink" data-needs="swiggy" hidden href="https://www.swiggy.com/" target="_blank" rel="noopener">Order on Swiggy</a>
+          </p>
+          <p class="soon" id="appsSoon"><span class="soon__dots" aria-hidden="true"><i id="soonZ"></i><i id="soonS"></i></span><span><b>Coming soon</b> <span id="appsSoonText">on Zomato &amp; Swiggy</span></span></p>
+        </div>
+      </div>
+      <div class="menu__tools" role="search" aria-label="Find a dish">
+        <label class="search">
+          <span class="sr">Search dishes</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15ZM16 16l5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <input id="dishSearch" type="search" placeholder="Search momos, rolls, chai…" autocomplete="off">
+        </label>
+        <button type="button" class="fchip" id="fVeg" aria-pressed="false"><span class="mark" aria-hidden="true"></span>Veg<span class="fchip__x" aria-hidden="true">×</span></button>
+        <button type="button" class="fchip" id="fNonveg" aria-pressed="false"><span class="mark mark--nv" aria-hidden="true"></span>Non-veg<span class="fchip__x" aria-hidden="true">×</span></button>
+        <button type="button" class="fchip" id="fMust" aria-pressed="false"><span class="tagdot" aria-hidden="true"></span>Must try<span class="fchip__x" aria-hidden="true">×</span></button>
+      </div>
+      <nav class="tabs" id="tabs" aria-label="Menu sections"></nav>
+      <div id="menuGroups"></div>
+      <div class="menu__empty" id="menuEmpty" hidden>
+        <p id="menuEmptyText">No dishes match your search.</p>
+        <button type="button" class="btn btn--ghost btn--sm" id="clearFilters">Clear search and filters</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMISE -->
+  <section class="sec" id="promise" data-thread="right">
+    <div class="wrap promise__in">
+      <div class="promise__statement">
+        <p class="eyebrow">Our promise</p>
+        <h2>A clean cart, fresh oil, and food cooked in front of you.</h2>
+      </div>
+      <ul class="promise__list">
+        <li class="promise__item">
+          <svg viewBox="0 0 48 48" data-draw aria-hidden="true"><path class="d" pathLength="1" d="M24 5C24 5 9 22 9 31a15 15 0 0 0 30 0C39 22 24 5 24 5Z"/><path class="d thin" pathLength="1" style="--d:.5s" d="M16 32a8 8 0 0 0 7 7"/></svg>
+          <div><h3>Fresh oil every evening</h3><p>We start each evening with new oil. Nothing is fried in yesterday's.</p></div>
+        </li>
+        <li class="promise__item">
+          <svg viewBox="0 0 48 48" data-draw aria-hidden="true"><path class="d" pathLength="1" style="--d:.15s" d="M24 4C31 14 38 19 38 30a14 14 0 0 1-28 0c0-7 4-11 8-14c0 6 2 9 6 10C21 19 19 11 24 4Z"/><path class="d thin" pathLength="1" style="--d:.6s" d="M24 28c4 4 5 6 5 9a5 5 0 0 1-10 0c0-3 2-6 5-9Z"/></svg>
+          <div><h3>Cooked when you order</h3><p>Nothing sits waiting under a cloth. Your plate goes straight from the tawa to your hands.</p></div>
+        </li>
+        <li class="promise__item">
+          <svg viewBox="0 0 48 48" data-draw aria-hidden="true"><path class="d" pathLength="1" style="--d:.3s" d="M6 14V30M6 18H24a10 10 0 0 1 10 10V32M6 26H24a2 2 0 0 1 2 2V32M26 32H34M18 18V11M12 11H24"/><path class="d thin" pathLength="1" style="--d:.8s" d="M30 36c0 0-3 4-3 6.5a3 3 0 0 0 6 0C33 40 30 36 30 36Z"/></svg>
+          <div><h3>Clean hands, filtered water</h3><p>Gloves and caps at the counter, and RO water for the chutneys and the chai.</p></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- MAKERS -->
+  <section class="sec" id="makers" data-thread="left">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="eyebrow">The Thela makers</p>
+        <h2>Three people, <span class="hl" data-draw>one cart.</span></h2>
+        <p class="lead">The faces you'll see at the counter every evening.</p>
+      </header>
+      <div class="makers__grid" id="makersGrid"></div>
+    </div>
+  </section>
+
+  <!-- FIND US -->
+  <section class="sec" id="find" data-thread="left">
+    <div class="wrap find__in">
+      <figure class="compass">
+        <svg viewBox="0 0 320 320" data-draw role="img" aria-label="Compass with a pin marking our spot in Purnia">
+          <circle class="ripple" cx="160" cy="160" r="150"/>
+          <circle class="ripple ripple--2" cx="160" cy="160" r="150"/>
+          <path class="d thin" pathLength="1" d="M10 160a150 150 0 1 0 300 0a150 150 0 1 0-300 0"/>
+          <path class="d thin" id="ticks" pathLength="1" style="--d:.2s"/>
+          <path class="d thin" pathLength="1" style="--d:.15s" d="M60 160a100 100 0 1 0 200 0a100 100 0 1 0-200 0"/>
+          <path class="d thin" pathLength="1" style="--d:.35s" d="M160 58V262M58 160H262"/>
+          <text class="dir" x="160" y="40" lang="hi">उ</text>
+          <text class="dir" x="281" y="161" lang="hi">पू</text>
+          <text class="dir" x="160" y="282" lang="hi">द</text>
+          <text class="dir" x="39" y="161" lang="hi">प</text>
+          <path class="d solid" pathLength="1" style="--d:.55s" d="M160 92C136 92 120 110 120 132C120 160 160 198 160 198C160 198 200 160 200 132C200 110 184 92 160 92Z"/>
+          <path class="d" pathLength="1" style="--d:.85s" d="M147 132a13 13 0 1 0 26 0a13 13 0 1 0-26 0"/>
+          <path class="d thin" pathLength="1" style="--d:1s" d="M142 206a18 4.5 0 1 0 36 0a18 4.5 0 1 0-36 0"/>
+        </svg>
+        <figcaption id="coords">25.78° N · 87.48° E</figcaption>
+      </figure>
+
+      <div class="find__info">
+        <p class="eyebrow">Find us</p>
+        <h2>Find the cart.</h2>
+        <p class="lead">We park at the same spot every evening. Tap Get directions and Google Maps will guide you from where you are to the cart.</p>
+        <address>Line Bazar Chowk<br>Purnia, Bihar 854301</address>
+        <div class="find__actions">
+          <a class="btn" id="mapsDir" href="https://www.google.com/maps/dir/?api=1&amp;destination=Line%20Bazar%20Chowk%2C%20Purnia%2C%20Bihar" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 20 21l-8-4-8 4 8-18.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>Get directions</a>
+          <a class="btn btn--ghost" id="mapsPin" href="https://www.google.com/maps/search/?api=1&amp;query=Line%20Bazar%20Chowk%2C%20Purnia%2C%20Bihar" target="_blank" rel="noopener">See the cart on the map</a>
+        </div>
+        <p class="find__live" data-needs="whatsapp" hidden>Moved for the evening? <a id="askLive" href="https://wa.me/" target="_blank" rel="noopener">Ask us for our live location on WhatsApp</a></p>
+        <div class="contact" data-needs="phone" hidden>
+          <p class="phone">Call or WhatsApp<a id="phoneLink" data-cfg="phone" href="#"></a></p>
+          <button type="button" class="btn btn--ghost btn--sm" id="copyPhone">Copy number</button>
+        </div>
+        <div class="hours">
+          <div class="hours__head"><h3>Hours</h3><span class="chip" data-status>Open daily · 4:00 PM – 10:30 PM</span></div>
+          <dl id="hoursList"></dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT & REVIEWS -->
+  <section class="sec" id="contact" data-thread="right">
+    <div class="wrap contact__in">
+      <div class="contact__intro">
+        <p class="eyebrow">Contact &amp; reviews</p>
+        <h2>Tell us how it <span class="hl" data-draw>tasted.</span></h2>
+        <p class="lead">A review, a complaint, a question or a party order: write it here and it comes straight to us on WhatsApp.</p>
+        <ul class="contact__list">
+          <li><b>Reviews and feedback</b> help us get the small things right.</li>
+          <li><b>Party and bulk orders:</b> tell us the date and how many people, at least a day ahead.</li>
+          <li data-needs="phone" hidden><b>Prefer to call?</b> <a id="contactPhone" data-cfg="phone" href="#"></a></li>
+        </ul>
+        <a class="btn btn--ghost" id="googleReview" data-needs="google" hidden href="#" target="_blank" rel="noopener">Rate us on Google</a>
+      </div>
+
+      <form class="cform" id="cForm" novalidate>
+        <div class="field">
+          <span id="cTypeLbl">What's it about?</span>
+          <div class="ctype" role="radiogroup" aria-labelledby="cTypeLbl">
+              <label><input type="radio" name="ctype" value="Review" checked><span>Review</span></label>
+              <label><input type="radio" name="ctype" value="Feedback"><span>Feedback</span></label>
+              <label><input type="radio" name="ctype" value="Question"><span>Question</span></label>
+              <label><input type="radio" name="ctype" value="Party order"><span>Party order</span></label>
+          </div>
+        </div>
+        <div class="field" id="cRateRow">
+          <span id="cRateLbl">How was the food?</span>
+          <div class="stars" role="radiogroup" aria-labelledby="cRateLbl">
+              <input type="radio" id="cr5" name="crating" value="5"><label for="cr5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9z"/></svg><span class="sr">5 stars</span></label>
+              <input type="radio" id="cr4" name="crating" value="4"><label for="cr4"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9z"/></svg><span class="sr">4 stars</span></label>
+              <input type="radio" id="cr3" name="crating" value="3"><label for="cr3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9z"/></svg><span class="sr">3 stars</span></label>
+              <input type="radio" id="cr2" name="crating" value="2"><label for="cr2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9z"/></svg><span class="sr">2 stars</span></label>
+              <input type="radio" id="cr1" name="crating" value="1"><label for="cr1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9z"/></svg><span class="sr">1 star</span></label>
+          </div>
+        </div>
+        <label class="field" for="cName"><span>Your name <i class="optional">(optional)</i></span>
+          <input id="cName" type="text" maxlength="60" autocomplete="name">
+        </label>
+        <label class="field" for="cMsg">Your message
+          <textarea id="cMsg" maxlength="600" rows="4" placeholder="What did you order, and how was it?"></textarea>
+        </label>
+        <p class="cerr" id="cErr" role="alert" hidden>Write a message first, then send it.</p>
+        <div class="cform__actions">
+          <a class="btn" id="cSend" href="https://wa.me/" target="_blank" rel="noopener">Send on WhatsApp</a>
+          <button type="button" class="linkbtn" id="cCopy">Copy message</button>
+        </div>
+        <p class="cdone" id="cDone" hidden>WhatsApp opens in a new tab with your message. Tap Send there to reach us.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="foot">
+    <div class="wrap">
+      <p class="wordmark" lang="hi" aria-label="Thela">ठेला</p>
+      <div class="foot__row">
+        <p><b>Thela</b><br>Fast food cart<br>Line Bazar Chowk, Purnia, Bihar 854301</p>
+        <p class="foot__contact" data-needs="contact" hidden><span data-needs="phone" hidden data-cfg="phone"></span><span data-needs="apps" hidden data-cfg="appsLine">Also on Zomato and Swiggy</span></p>
+        <p>© 2026 Thela. Made in Purnia.<span data-needs="fssai" hidden><br>FSSAI Reg. No. <span data-cfg="fssai"></span></span></p>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<!-- ORDER BAR -->
+<div class="obar" id="obar" hidden>
+  <div class="obar__box">
+    <div class="obar__panel" id="opanel" hidden>
+      <div class="obar__head"><h3>Your order</h3><button type="button" class="linkbtn" id="oclear">Clear all</button></div>
+      <ul class="olist" id="olist"></ul>
+      <div class="field" data-needs="delivery" hidden>
+        <span id="omodeLbl">How do you want it?</span>
+        <div class="seg" role="radiogroup" aria-labelledby="omodeLbl">
+          <label><input type="radio" name="omode" value="pickup" checked>Pickup from the cart</label>
+          <label><input type="radio" name="omode" value="delivery">Home delivery</label>
+        </div>
+      </div>
+      <label class="field" for="oaddr" data-mode="delivery" hidden>Delivery address
+        <input id="oaddr" type="text" maxlength="160" autocomplete="street-address" placeholder="House, street and a landmark">
+      </label>
+      <div class="ofields">
+        <label class="field" for="pickup" data-mode="pickup">Pickup time
+          <select id="pickup">
+            <option>As soon as possible</option>
+            <option>In 15 minutes</option>
+            <option>In 30 minutes</option>
+            <option>In 1 hour</option>
+          </select>
+        </label>
+        <label class="field" for="onote">Note for the cook
+          <input id="onote" type="text" maxlength="120" placeholder="Less spicy, extra chutney…">
+        </label>
+      </div>
+      <div class="field" data-needs="upi" hidden>
+        <span id="opayLbl">Payment</span>
+        <div class="seg" role="radiogroup" aria-labelledby="opayLbl">
+          <label><input type="radio" name="opay" value="later" checked><span id="opayLater">Pay at the cart</span></label>
+          <label><input type="radio" name="opay" value="upi">Pay now by UPI</label>
+        </div>
+      </div>
+      <div class="upi" id="upiBox" hidden>
+        <a class="btn btn--sm" id="upiPay" href="#">Pay by UPI</a>
+        <span>UPI ID <b id="upiId"></b></span>
+        <button type="button" class="linkbtn" id="upiCopy">Copy UPI ID</button>
+      </div>
+      <p class="nudge" id="onudge" hidden></p>
+      <div class="bill" id="obill" aria-live="polite"></div>
+      <p class="ofine"><span id="ofineText">We confirm every order on WhatsApp.</span><button type="button" class="linkbtn" id="ocopy">Copy order text</button></p>
+    </div>
+    <div class="obar__bar">
+      <button type="button" class="obar__sum" id="otoggle" aria-expanded="false" aria-controls="opanel">
+        <b id="ocount">0 items</b><b id="ototal">₹0</b><small id="otoggleLabel">Review order</small>
+      </button>
+      <a class="btn" id="osend" href="https://wa.me/" target="_blank" rel="noopener">Send on WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<!-- HALF OR FULL -->
+<dialog class="sheet" id="sheet" aria-labelledby="sheetTitle">
+  <form class="sheet__in" method="dialog" id="sheetForm">
+    <div class="sheet__head">
+      <span class="mark" id="sheetMark" aria-hidden="true"></span>
+      <div><h3 id="sheetTitle">Dish</h3><p id="sheetSub"></p></div>
+      <button type="button" class="sheet__x" data-close aria-label="Close">×</button>
+    </div>
+    <div class="opts" id="sheetOpts" role="radiogroup" aria-label="Plate size"></div>
+    <div class="sheet__foot">
+      <span class="step"><button type="button" id="sheetDec" aria-label="One less">−</button><span id="sheetQty">1</span><button type="button" id="sheetInc" aria-label="One more">+</button></span>
+      <button type="submit" class="btn" id="sheetAdd">Add item</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+(() => {
+  'use strict';
+
+  /* ─── Your cart's details. Fill these in and everything on the page updates. ─── */
+  const CONFIG = {
+    name: 'Thela',
+    whatsapp: '',          // country code + number, digits only, e.g. '91XXXXXXXXXX'
+    phone: '',             // as you want it shown, e.g. '+91 XXXXX XXXXX'
+    mapsQuery: 'Line Bazar Chowk, Purnia, Bihar', // used only until `location` below is set
+    // The cart's exact spot. Stand at the cart, open Google Maps, press and hold on the spot:
+    // the coordinates (like 25.7771, 87.4753) appear at the top. Put them here.
+    location: { lat: null, lng: null },
+    mapsLink: '',          // optional: your Google Business Profile link, if you make one
+    googleReview: '',      // optional: your Google review link. Turns on the "Rate us on Google" button.
+    fssai: '',             // your 14-digit FSSAI registration number
+    zomato: '',            // your Zomato page link, once you're listed (the buttons stay hidden until then)
+    swiggy: '',            // your Swiggy page link, once you're listed
+    upi: '',               // your UPI ID, e.g. 'yourname@okaxis'. Turns on "Pay now by UPI".
+    delivery: {            // set enabled: false if you only do pickup
+      enabled: true,
+      fee: 20,             // delivery charge, in rupees
+      freeAbove: 299,      // delivery is free when the food costs this much or more (0 = never free)
+      minOrder: 100,       // smallest order you'll deliver
+      packing: 0,          // packing charge on delivery orders
+      area: 'within 3 km of the cart',
+    },
+    hours: { open: '16:00', close: '22:30', closedDays: [] }, // closedDays: 0 = Sunday … 6 = Saturday
+  };
+
+  const MENU = [
+    { id: 'momos', cat: 'Momos', hi: 'मोमो', note: 'Steamed fresh all evening. Served with our red chutney and creamy mayo.', items: [
+      { name: 'Veg Steamed Momos', tag: 'Must try', hi: 'वेज स्टीम मोमो', veg: true, note: '5 / 10 pcs', prices: [['Half', 40], ['Full', 70]] },
+      { name: 'Paneer Momos', hi: 'पनीर मोमो', veg: true, note: '5 / 10 pcs', prices: [['Half', 60], ['Full', 110]] },
+      { name: 'Kurkure Momos', hi: 'कुरकुरे मोमो', veg: true, note: 'Crumb-coated and fried', prices: [['Half', 60], ['Full', 110]] },
+      { name: 'Jhol Momos', hi: 'झोल मोमो', veg: true, note: 'In a spicy tomato-sesame broth', prices: [['Half', 60], ['Full', 100]] },
+      { name: 'Chicken Steamed Momos', hi: 'चिकन स्टीम मोमो', veg: false, note: '5 / 10 pcs', prices: [['Half', 60], ['Full', 100]] },
+      { name: 'Chicken Fried Momos', hi: 'चिकन फ्राइड मोमो', veg: false, note: '5 / 10 pcs', prices: [['Half', 70], ['Full', 120]] },
+    ]},
+    { id: 'rolls', cat: 'Rolls', hi: 'रोल', note: 'Paratha cooked on the tawa, rolled with onion, green chilli and a squeeze of lemon.', items: [
+      { name: 'Veg Roll', hi: 'वेज रोल', veg: true, prices: [['', 40]] },
+      { name: 'Paneer Tikka Roll', hi: 'पनीर टिक्का रोल', veg: true, prices: [['', 70]] },
+      { name: 'Egg Roll', tag: 'Must try', hi: 'अंडा रोल', veg: false, prices: [['', 40]] },
+      { name: 'Double Egg Roll', hi: 'डबल अंडा रोल', veg: false, prices: [['', 55]] },
+      { name: 'Chicken Roll', hi: 'चिकन रोल', veg: false, prices: [['', 80]] },
+      { name: 'Egg Chicken Roll', hi: 'अंडा चिकन रोल', veg: false, prices: [['', 95]] },
+    ]},
+    { id: 'chinese', cat: 'Chinese', hi: 'चाइनीज़', note: 'Tossed in the kadhai on a high flame. Half and full plates.', items: [
+      { name: 'Veg Chowmein', tag: 'Must try', hi: 'वेज चाउमीन', veg: true, prices: [['Half', 40], ['Full', 70]] },
+      { name: 'Egg Chowmein', hi: 'अंडा चाउमीन', veg: false, prices: [['Half', 50], ['Full', 90]] },
+      { name: 'Chicken Chowmein', hi: 'चिकन चाउमीन', veg: false, prices: [['Half', 70], ['Full', 120]] },
+      { name: 'Chilli Potato', hi: 'चिली पोटैटो', veg: true, prices: [['Half', 60], ['Full', 100]] },
+      { name: 'Veg Manchurian', hi: 'वेज मंचूरियन', veg: true, prices: [['Half', 60], ['Full', 100]] },
+      { name: 'Chilli Paneer', hi: 'चिली पनीर', veg: true, prices: [['Half', 80], ['Full', 150]] },
+    ]},
+    { id: 'snacks', cat: 'Burgers & Snacks', hi: 'बर्गर और स्नैक्स', note: 'Buns toasted on the tawa with butter. Fries cut fresh every day.', items: [
+      { name: 'Aloo Tikki Burger', hi: 'आलू टिक्की बर्गर', veg: true, prices: [['', 50]] },
+      { name: 'Paneer Burger', hi: 'पनीर बर्गर', veg: true, prices: [['', 70]] },
+      { name: 'Chicken Burger', hi: 'चिकन बर्गर', veg: false, prices: [['', 90]] },
+      { name: 'French Fries', hi: 'फ्रेंच फ्राइज़', veg: true, prices: [['Plain', 60], ['Peri-peri', 70]] },
+      { name: 'Masala Maggi', hi: 'मसाला मैगी', veg: true, prices: [['', 40]] },
+      { name: 'Grilled Sandwich', hi: 'ग्रिल्ड सैंडविच', veg: true, prices: [['', 50]] },
+    ]},
+    { id: 'chai', cat: 'Chai & Coolers', hi: 'चाय और ठंडा', note: 'Chai poured into a clay kulhad. Coolers made when you order.', items: [
+      { name: 'Kulhad Chai', tag: 'Must try', hi: 'कुल्हड़ चाय', veg: true, prices: [['', 15]] },
+      { name: 'Masala Kulhad Chai', hi: 'मसाला कुल्हड़ चाय', veg: true, prices: [['', 20]] },
+      { name: 'Cold Coffee', hi: 'कोल्ड कॉफ़ी', veg: true, prices: [['', 60]] },
+      { name: 'Nimbu Shikanji', hi: 'नींबू शिकंजी', veg: true, prices: [['', 30]] },
+      { name: 'Masala Soda', hi: 'मसाला सोडा', veg: true, prices: [['', 30]] },
+      { name: 'Sweet Lassi', hi: 'मीठी लस्सी', veg: true, prices: [['', 40]] },
+    ]},
+  ];
+
+  /* ─── The makers. Add each photo as a file next to the page (e.g. 'makers/sanskar.jpg')
+     and put its path in `photo`; until then a line drawing stands in. ─── */
+  const TEAM = [
+    { name: 'Your partner', role: 'Co-founder', roleHi: 'सह-संस्थापक', chef: false, photo: '',
+      bio: 'Write a line about your partner and what they look after at the cart.' },
+    { name: 'Sanskar Verma', role: 'Co-founder', roleHi: 'सह-संस्थापक', chef: false, photo: '',
+      bio: 'Write a line or two about yourself: why you started Thela, and the dish you always order.' },
+    { name: 'Our chef', role: 'Chef', roleHi: 'शेफ़', chef: true, photo: '',
+      bio: "Write a line about your chef: where they learned to cook, and the plate they're proudest of." },
+  ];
+
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rupee = n => '₹' + n;
+  const f = n => n.toFixed(1);
+
+  /* ─── Time helpers ─── */
+  const toMin = hhmm => { const [h, m] = hhmm.split(':').map(Number); return h * 60 + m; };
+  const fmtTime = min => {
+    min = ((min % 1440) + 1440) % 1440;
+    const h = Math.floor(min / 60), m = min % 60;
+    return `${h % 12 || 12}:${String(m).padStart(2, '0')} ${h >= 12 ? 'PM' : 'AM'}`;
+  };
+
+  /* ─── Live open/closed status ──────────────────────────────────────────────
+     Drives the chip in the hero and on the hours card.
+     Return { state: 'open' | 'soon' | 'closed', label: 'Open now · till 10:30 PM' },
+     or null to show the plain "Open daily · 4:00 PM – 10:30 PM" line.
+     Helpers: toMin('16:00') → 960, fmtTime(960) → '4:00 PM', now.getDay() → 0 (Sun) … 6 (Sat).
+     TODO: write your cart's rules here. */
+  function getCartStatus(now, hours) {
+    return null;
+  }
+
+  /* ─── Config into the page ─── */
+  const fill = (key, val) => $$(`[data-cfg="${key}"]`).forEach(el => { el.textContent = val; });
+  fill('phone', CONFIG.phone);
+  fill('fssai', CONFIG.fssai);
+  fill('hours', `${fmtTime(toMin(CONFIG.hours.open))} – ${fmtTime(toMin(CONFIG.hours.close))}`);
+  $$('[data-needs="phone"]').forEach(el => { el.hidden = !CONFIG.phone; });
+  $$('[data-needs="fssai"]').forEach(el => { el.hidden = !CONFIG.fssai; });
+  $$('[data-needs="whatsapp"]').forEach(el => { el.hidden = !CONFIG.whatsapp; });
+  $$('[data-needs="upi"]').forEach(el => { el.hidden = !CONFIG.upi; });
+  $$('[data-needs="delivery"]').forEach(el => { el.hidden = !(CONFIG.delivery && CONFIG.delivery.enabled); });
+  $('#upiId').textContent = CONFIG.upi;
+
+  /* Zomato and Swiggy: each link shows only once you've pasted it into CONFIG. */
+  const apps = [CONFIG.zomato && 'Zomato', CONFIG.swiggy && 'Swiggy'].filter(Boolean);
+  $$('[data-needs="apps"]').forEach(el => { el.hidden = !apps.length; });
+  $$('[data-needs="zomato"]').forEach(el => { el.hidden = !CONFIG.zomato; });
+  $$('[data-needs="swiggy"]').forEach(el => { el.hidden = !CONFIG.swiggy; });
+  if (CONFIG.zomato) $('#zomatoLink').href = CONFIG.zomato;
+  if (CONFIG.swiggy) $('#swiggyLink').href = CONFIG.swiggy;
+  if (apps.length) fill('appsLine', `Also on ${apps.join(' and ')}`);
+  $$('[data-needs="contact"]').forEach(el => { el.hidden = !(CONFIG.phone || apps.length); });
+  const soon = [!CONFIG.zomato && 'Zomato', !CONFIG.swiggy && 'Swiggy'].filter(Boolean);
+  $('#appsSoon').hidden = !soon.length;
+  $('#appsSoonText').textContent = `on ${soon.join(' & ')}`;
+  $('#soonZ').hidden = Boolean(CONFIG.zomato);
+  $('#soonS').hidden = Boolean(CONFIG.swiggy);
+  $('#phoneLink').href = 'tel:' + CONFIG.phone.replace(/[^\d+]/g, '');
+
+  /* Maps: a pin on the exact spot, and directions that start from wherever the customer is. */
+  const loc = CONFIG.location || {};
+  const hasSpot = Number.isFinite(loc.lat) && Number.isFinite(loc.lng);
+  const dest = encodeURIComponent(hasSpot ? `${loc.lat},${loc.lng}` : CONFIG.mapsQuery);
+  $('#mapsPin').href = CONFIG.mapsLink || `https://www.google.com/maps/search/?api=1&query=${dest}`;
+  $('#mapsDir').href = `https://www.google.com/maps/dir/?api=1&destination=${dest}`;
+  if (hasSpot) {
+    $('#coords').textContent = `${Math.abs(loc.lat).toFixed(4)}° ${loc.lat >= 0 ? 'N' : 'S'} · ${Math.abs(loc.lng).toFixed(4)}° ${loc.lng >= 0 ? 'E' : 'W'}`;
+  }
+  $('#askLive').href = waLink(`Namaste ${CONFIG.name}! Where is the cart right now? Please share your live location.`);
+
+  /* ─── Hours + status ─── */
+  const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const DAYS_HI = ['रविवार', 'सोमवार', 'मंगलवार', 'बुधवार', 'गुरुवार', 'शुक्रवार', 'शनिवार'];
+  function renderHours() {
+    const { open, close, closedDays = [] } = CONFIG.hours;
+    const today = new Date().getDay();
+    $('#hoursList').innerHTML = [1, 2, 3, 4, 5, 6, 0].map(d => `
+      <div class="hours__row${d === today ? ' is-today' : ''}">
+        <dt>${DAYS[d]}<span class="hours__hi" lang="hi">(${DAYS_HI[d]})</span>${d === today ? '<em>Today</em>' : ''}</dt>
+        <dd>${closedDays.includes(d) ? 'Closed' : `${fmtTime(toMin(open))} – ${fmtTime(toMin(close))}`}</dd>
+      </div>`).join('');
+  }
+  function renderStatus() {
+    const { open, close } = CONFIG.hours;
+    let s = null;
+    try { s = getCartStatus(new Date(), CONFIG.hours); } catch (err) { console.error(err); }
+    const label = s ? s.label : `Open daily · ${fmtTime(toMin(open))} – ${fmtTime(toMin(close))}`;
+    $$('[data-status]').forEach(el => { el.textContent = label; el.dataset.state = s ? s.state : 'plain'; });
+  }
+  renderHours();
+  renderStatus();
+  setInterval(renderStatus, 60000);
+
+  /* ─── Menu ─── */
+  const groupsEl = $('#menuGroups');
+  groupsEl.innerHTML = MENU.map((g, gi) => `
+    <section class="mgroup" id="m-${g.id}" aria-labelledby="mh-${g.id}">
+      <header class="mgroup__head">
+        <h3 id="mh-${g.id}">${g.cat}</h3>
+        <p class="mgroup__hi" lang="hi">${g.hi}</p>
+        <p class="mgroup__note">${g.note}</p>
+      </header>
+      <ul class="mgroup__list">${g.items.map((it, ii) => `
+        <li class="dish" data-diet="${it.veg ? 'veg' : 'nonveg'}"${it.tag ? ` data-tag="${it.tag}"` : ''}
+            data-search="${[it.name, it.hi, it.note || ''].join(' ').toLowerCase()}">
+          <span class="mark${it.veg ? '' : ' mark--nv'}" role="img" aria-label="${it.veg ? 'Veg' : 'Non-veg'}"></span>
+          <div class="dish__main">
+            <div class="dish__top">
+              <span class="dish__name">${it.name}</span>
+              <span class="dish__lead" aria-hidden="true"></span>
+              <span class="dish__price">${it.prices.map(([, p]) => rupee(p)).join('<i>/</i>')}</span>
+            </div>
+            <div class="dish__bottom">
+              <div class="dish__meta">
+                <span class="dish__sub"><span lang="hi">${it.hi}</span>${it.note ? ` · ${it.note}` : ''}</span>
+                ${it.tag ? `<span class="tag">${it.tag}</span>` : ''}
+              </div>
+              <div class="add" data-item="${gi}.${ii}"></div>
+            </div>
+          </div>
+        </li>`).join('')}
+      </ul>
+    </section>`).join('');
+
+  /* Tabs: jump to a section; the brass underline follows whichever section is in view. */
+  const tabs = $('#tabs');
+  tabs.innerHTML = MENU.map(g => `<button type="button" class="tab" data-target="m-${g.id}">${g.cat}</button>`).join('')
+    + '<span class="tabs__ind" aria-hidden="true"></span>';
+  const ind = $('.tabs__ind', tabs);
+  let activeTab = 'm-' + MENU[0].id;
+  function setActive(id) {
+    activeTab = id;
+    $$('.tab', tabs).forEach(t => {
+      const on = t.dataset.target === id;
+      t.setAttribute('aria-current', on ? 'true' : 'false');
+      if (!on) return;
+      ind.style.width = t.offsetWidth + 'px';
+      ind.style.transform = `translateX(${t.offsetLeft}px)`;
+      if (tabs.scrollWidth > tabs.clientWidth) tabs.scrollTo({ left: t.offsetLeft - 16, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  }
+  tabs.addEventListener('click', e => {
+    const t = e.target.closest('.tab');
+    if (t) document.getElementById(t.dataset.target).scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  });
+  if ('IntersectionObserver' in window) {
+    const spy = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) setActive(e.target.id); }), { rootMargin: '-40% 0px -55% 0px' });
+    $$('.mgroup').forEach(g => spy.observe(g));
+  }
+  setActive(activeTab);
+
+  /* ─── Ordering: Add buttons, the half/full sheet, pickup or delivery, and the bill ─── */
+  const order = new Map(); // "group.item.size" → quantity
+  const bar = $('#obar'), panel = $('#opanel'), toggle = $('#otoggle'), send = $('#osend');
+  const DEL = CONFIG.delivery || { enabled: false };
+  const lookup = key => {
+    const [g, i, p] = key.split('.').map(Number);
+    const it = MENU[g].items[i];
+    const [size, price] = it.prices[p];
+    return { name: it.name, size: it.prices.length > 1 ? size : '', price };
+  };
+  const lines = () => [...order].map(([key, q]) => ({ key, q, ...lookup(key) }));
+  const keysFor = id => [...order.keys()].filter(k => k.startsWith(id + '.'));
+  const itemQty = id => keysFor(id).reduce((n, k) => n + order.get(k), 0);
+  const mode = () => (DEL.enabled && $('input[name="omode"]:checked').value === 'delivery' ? 'delivery' : 'pickup');
+  const payNow = () => Boolean(CONFIG.upi) && $('input[name="opay"]:checked').value === 'upi';
+
+  function bill() {
+    const ls = lines();
+    const items = ls.reduce((s, l) => s + l.q * l.price, 0);
+    const count = ls.reduce((n, l) => n + l.q, 0);
+    const m = mode();
+    let fee = 0, packing = 0, short = 0, toFree = 0;
+    if (m === 'delivery') {
+      const free = DEL.freeAbove > 0 && items >= DEL.freeAbove;
+      fee = free ? 0 : (DEL.fee || 0);
+      packing = DEL.packing || 0;
+      short = Math.max(0, (DEL.minOrder || 0) - items);
+      toFree = DEL.freeAbove > 0 && !free ? DEL.freeAbove - items : 0;
+    }
+    return { ls, items, count, mode: m, fee, packing, short, toFree, toPay: items + fee + packing };
+  }
+
+  function composeMessage(b = bill()) {
+    const out = [`Namaste ${CONFIG.name}! New order:`];
+    b.ls.forEach(l => out.push(`• ${l.q} × ${l.name}${l.size ? ` (${l.size})` : ''} – ${rupee(l.q * l.price)}`));
+    out.push('', `Item total: ${rupee(b.items)}`);
+    if (b.mode === 'delivery') {
+      if (b.packing) out.push(`Packing: ${rupee(b.packing)}`);
+      out.push(`Delivery: ${b.fee ? rupee(b.fee) : 'Free'}`);
+    }
+    out.push(`To pay: ${rupee(b.toPay)}`, '');
+    if (b.mode === 'delivery') out.push('Order type: Home delivery', `Address: ${$('#oaddr').value.trim() || '(not given)'}`);
+    else out.push('Order type: Pickup from the cart', `Pickup: ${$('#pickup').value}`);
+    out.push(`Payment: ${payNow() ? "Paying now by UPI (I'll send the screenshot)" : b.mode === 'delivery' ? 'Cash or UPI on delivery' : 'Cash or UPI at the cart'}`);
+    const note = $('#onote').value.trim();
+    if (note) out.push(`Note: ${note}`);
+    return out.join('\n');
+  }
+  function waLink(text) {
+    const n = String(CONFIG.whatsapp).replace(/\D/g, '');
+    return `https://wa.me/${n.length >= 10 ? n : ''}?text=${encodeURIComponent(text)}`;
+  }
+  // Opens GPay, PhonePe, Paytm or BHIM with the amount filled in (on phones that have one).
+  const upiLink = amount => `upi://pay?pa=${CONFIG.upi}&pn=${encodeURIComponent(CONFIG.name)}&am=${amount}.00&cu=INR&tn=${encodeURIComponent(CONFIG.name + ' order')}`;
+
+  function setQty(key, q) {
+    if (q > 0) order.set(key, Math.min(q, 50)); else order.delete(key);
+    syncOrder();
+  }
+  const bump = el => { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); };
+
+  // The Add button turns into − n + once a dish is in the order, like the delivery apps.
+  function renderAdd(el) {
+    const id = el.dataset.item;
+    const [gi, ii] = id.split('.').map(Number);
+    const it = MENU[gi].items[ii];
+    const q = itemQty(id);
+    if (el.dataset.q === String(q)) return;
+    const focusWas = el.contains(document.activeElement) ? (document.activeElement.hasAttribute('data-dec') ? 'dec' : 'inc') : '';
+    el.dataset.q = q;
+    el.innerHTML = (q
+      ? `<span class="step"><button type="button" data-dec aria-label="Remove one ${it.name}">−</button><span>${q}</span><button type="button" data-inc aria-label="Add one more ${it.name}">+</button></span>`
+      : `<button type="button" class="add__btn" data-inc aria-label="Add ${it.name}">Add<span aria-hidden="true">+</span></button>`)
+      + (it.prices.length > 1 ? `<small>${it.prices.map(p => p[0]).join(' / ')}</small>` : '');
+    if (focusWas) $(focusWas === 'dec' && q ? '[data-dec]' : '[data-inc]', el).focus({ preventScroll: true });
+  }
+
+  function syncOrder() {
+    $$('.add', groupsEl).forEach(renderAdd);
+    const b = bill();
+    bar.hidden = b.count === 0;
+    document.body.classList.toggle('has-order', b.count > 0);
+    if (!b.count) setPanel(false);
+    $('#ocount').textContent = `${b.count} item${b.count === 1 ? '' : 's'}`;
+    $('#ototal').textContent = rupee(b.toPay);
+    $$('[data-mode]').forEach(el => { el.hidden = el.dataset.mode !== b.mode; });
+    $('#opayLater').textContent = b.mode === 'delivery' ? 'Pay on delivery' : 'Pay at the cart';
+    $('#ofineText').textContent = b.mode === 'delivery'
+      ? `We deliver ${DEL.area}. We confirm every order on WhatsApp.`
+      : 'We confirm every order on WhatsApp.';
+
+    const feeCell = b.fee ? rupee(b.fee) : (DEL.fee ? `<s>${rupee(DEL.fee)}</s>Free` : 'Free');
+    $('#obill').innerHTML = `
+      <div><span>Item total</span><span>${rupee(b.items)}</span></div>
+      ${b.mode === 'delivery' && b.packing ? `<div><span>Packing</span><span>${rupee(b.packing)}</span></div>` : ''}
+      ${b.mode === 'delivery' ? `<div><span>Delivery fee</span><span>${feeCell}</span></div>` : ''}
+      <div class="bill__total"><span>To pay</span><span>${rupee(b.toPay)}</span></div>`;
+
+    let msg = '';
+    if (b.mode === 'delivery' && b.short) msg = `Add ${rupee(b.short)} more to order delivery. The minimum for delivery is ${rupee(DEL.minOrder)}.`;
+    else if (b.mode === 'delivery' && b.toFree > 0) msg = `Add ${rupee(b.toFree)} more for free delivery.`;
+    $('#onudge').hidden = !msg;
+    $('#onudge').textContent = msg;
+
+    const upiOn = payNow() && b.count > 0;
+    $('#upiBox').hidden = !upiOn;
+    if (upiOn) { $('#upiPay').href = upiLink(b.toPay); $('#upiPay').textContent = `Pay ${rupee(b.toPay)} by UPI`; }
+
+    const blocked = b.mode === 'delivery' && b.short > 0;
+    send.setAttribute('aria-disabled', String(blocked));
+    send.textContent = blocked ? `Add ${rupee(b.short)} more` : 'Send on WhatsApp';
+    send.href = waLink(composeMessage(b));
+
+    $('#olist').innerHTML = b.ls.map(l => `
+      <li class="oline">
+        <span>${l.name}${l.size ? `<em>${l.size}</em>` : ''}</span>
+        <span class="qty">
+          <button type="button" data-step="-1" data-key="${l.key}" aria-label="Remove one ${l.name}">−</button>
+          <span>${l.q}</span>
+          <button type="button" data-step="1" data-key="${l.key}" aria-label="Add one ${l.name}">+</button>
+        </span>
+        <span class="oline__amt">${rupee(l.q * l.price)}</span>
+      </li>`).join('');
+  }
+  function setPanel(open) {
+    panel.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+    $('#otoggleLabel').textContent = open ? 'Hide order' : 'Review order';
+  }
+
+  groupsEl.addEventListener('click', e => {
+    const btn = e.target.closest('[data-inc],[data-dec]');
+    if (!btn) return;
+    const holder = btn.closest('.add'), id = holder.dataset.item;
+    const [gi, ii] = id.split('.').map(Number);
+    const it = MENU[gi].items[ii];
+    if (btn.hasAttribute('data-inc')) {
+      if (it.prices.length > 1) return openSheet(gi, ii);
+      setQty(`${id}.0`, (order.get(`${id}.0`) || 0) + 1);
+    } else {
+      const ks = keysFor(id);
+      if (ks.length === 1) setQty(ks[0], order.get(ks[0]) - 1);
+      else {
+        // Both half and full plates are in the order: let them choose which to remove.
+        setPanel(true);
+        $('#onudge').hidden = false;
+        $('#onudge').textContent = `You have more than one size of ${it.name}. Change them here.`;
+        return;
+      }
+    }
+    bump(holder);
+  });
+  $('#olist').addEventListener('click', e => {
+    const b = e.target.closest('[data-step]');
+    if (b) setQty(b.dataset.key, (order.get(b.dataset.key) || 0) + Number(b.dataset.step));
+  });
+  toggle.addEventListener('click', () => setPanel(panel.hidden));
+  $('#oclear').addEventListener('click', () => { order.clear(); syncOrder(); });
+  $$('input[name="omode"], input[name="opay"]').forEach(r => r.addEventListener('change', syncOrder));
+  ['#pickup', '#onote', '#oaddr'].forEach(s => $(s).addEventListener('input', () => { send.href = waLink(composeMessage()); }));
+  send.addEventListener('click', e => {
+    const b = bill();
+    if (b.mode === 'delivery' && b.short > 0) { e.preventDefault(); setPanel(true); return; }
+    if (b.mode === 'delivery' && !$('#oaddr').value.trim()) {
+      e.preventDefault();
+      setPanel(true);
+      $('#onudge').hidden = false;
+      $('#onudge').textContent = 'Add your delivery address so we can find you.';
+      $('#oaddr').focus();
+    }
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !panel.hidden && !sheet.open) setPanel(false); });
+
+  /* Half or full: a small sheet, like the apps' "customise" step */
+  const sheet = $('#sheet');
+  let sheetFor = null, sheetQty = 1;
+  function openSheet(gi, ii) {
+    const it = MENU[gi].items[ii];
+    sheetFor = { gi, ii };
+    sheetQty = 1;
+    $('#sheetMark').className = 'mark' + (it.veg ? '' : ' mark--nv');
+    $('#sheetTitle').textContent = it.name;
+    $('#sheetSub').textContent = 'Choose your plate' + (it.note ? ` · ${it.note}` : '');
+    $('#sheetOpts').innerHTML = it.prices.map(([size, p], pi) => `
+      <label class="opt"><input type="radio" name="osize" value="${pi}"${pi === 0 ? ' checked' : ''}><span>${size}</span><b>${rupee(p)}</b></label>`).join('');
+    updateSheet();
+    if (typeof sheet.showModal === 'function') sheet.showModal(); else sheet.setAttribute('open', '');
+  }
+  function updateSheet() {
+    const it = MENU[sheetFor.gi].items[sheetFor.ii];
+    const pi = Number($('input[name="osize"]:checked', sheet).value);
+    $('#sheetQty').textContent = sheetQty;
+    $('#sheetAdd').textContent = `Add item · ${rupee(it.prices[pi][1] * sheetQty)}`;
+  }
+  function closeSheet() {
+    if (!sheet.open) return;
+    if (typeof sheet.close === 'function') sheet.close(); else sheet.removeAttribute('open');
+  }
+  $('#sheetOpts').addEventListener('change', updateSheet);
+  $('#sheetDec').addEventListener('click', () => { sheetQty = Math.max(1, sheetQty - 1); updateSheet(); });
+  $('#sheetInc').addEventListener('click', () => { sheetQty = Math.min(20, sheetQty + 1); updateSheet(); });
+  $('[data-close]', sheet).addEventListener('click', closeSheet);
+  sheet.addEventListener('click', e => { if (e.target === sheet) closeSheet(); }); // a tap outside the box
+  $('#sheetForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const id = `${sheetFor.gi}.${sheetFor.ii}`;
+    const key = `${id}.${$('input[name="osize"]:checked', sheet).value}`;
+    closeSheet();
+    setQty(key, (order.get(key) || 0) + sheetQty);
+    const holder = $(`.add[data-item="${id}"]`);
+    bump(holder);
+    $('[data-inc]', holder).focus({ preventScroll: true });
+  });
+
+  /* Search and filters */
+  const filt = { diet: '', must: false, q: '' };
+  function syncChips() {
+    $('#fVeg').setAttribute('aria-pressed', String(filt.diet === 'veg'));
+    $('#fNonveg').setAttribute('aria-pressed', String(filt.diet === 'nonveg'));
+    $('#fMust').setAttribute('aria-pressed', String(filt.must));
+  }
+  function applyFilters() {
+    const q = filt.q.trim().toLowerCase();
+    const shown = [];
+    $$('.mgroup', groupsEl).forEach(g => {
+      let n = 0;
+      $$('.dish', g).forEach(li => {
+        const ok = (!filt.diet || li.dataset.diet === filt.diet)
+          && (!filt.must || li.hasAttribute('data-tag'))
+          && (!q || li.dataset.search.includes(q));
+        li.hidden = !ok;
+        if (ok) n++;
+      });
+      g.hidden = !n;
+      $(`.tab[data-target="${g.id}"]`, tabs).hidden = !n;
+      if (n) shown.push(g.id);
+    });
+    $('#menuEmpty').hidden = shown.length > 0;
+    $('#menuEmptyText').textContent = q ? `No dishes match “${filt.q.trim()}”.` : 'No dishes match these filters.';
+    ind.style.opacity = shown.length ? '1' : '0';
+    if (shown.length) setActive(shown.includes(activeTab) ? activeTab : shown[0]);
+  }
+  $('#fVeg').addEventListener('click', () => { filt.diet = filt.diet === 'veg' ? '' : 'veg'; syncChips(); applyFilters(); });
+  $('#fNonveg').addEventListener('click', () => { filt.diet = filt.diet === 'nonveg' ? '' : 'nonveg'; syncChips(); applyFilters(); });
+  $('#fMust').addEventListener('click', () => { filt.must = !filt.must; syncChips(); applyFilters(); });
+  $('#dishSearch').addEventListener('input', e => { filt.q = e.target.value; applyFilters(); });
+  $('#clearFilters').addEventListener('click', () => {
+    Object.assign(filt, { diet: '', must: false, q: '' });
+    $('#dishSearch').value = '';
+    syncChips();
+    applyFilters();
+    $('#dishSearch').focus();
+  });
+
+  syncOrder();
+
+  // Three tries, in order: the classic copy command (works inside framed pages that block the
+  // Clipboard API), then the Clipboard API, then selecting the text so the visitor can copy it.
+  function copyText(btn, text, fallbackEl) {
+    const label = btn.dataset.label || (btn.dataset.label = btn.textContent);
+    const done = msg => {
+      btn.textContent = msg;
+      clearTimeout(btn._reset);
+      btn._reset = setTimeout(() => { btn.textContent = label; }, 2000);
+    };
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;pointer-events:none';
+    document.body.appendChild(ta);
+    ta.select();
+    ta.setSelectionRange(0, text.length);
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch { ok = false; }
+    ta.remove();
+    btn.focus({ preventScroll: true });
+    if (ok) return done('Copied');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => done('Copied'), selectInstead);
+    } else selectInstead();
+    function selectInstead() {
+      if (!fallbackEl) return done('Copy not available here');
+      const r = document.createRange(); r.selectNodeContents(fallbackEl);
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      done('Selected, copy it');
+    }
+  }
+  $('#copyPhone').addEventListener('click', e => copyText(e.currentTarget, CONFIG.phone, $('#phoneLink')));
+  $('#upiCopy').addEventListener('click', e => copyText(e.currentTarget, CONFIG.upi, $('#upiId')));
+
+  /* ─── Contact & reviews: the form only builds a WhatsApp message; nothing is stored on the page ─── */
+  const cForm = $('#cForm'), cSend = $('#cSend');
+  const C_HINT = {
+    Review: 'What did you order, and how was it?',
+    Feedback: 'What should we do better?',
+    Question: 'Ask us anything: timings, spice level, ingredients…',
+    'Party order': 'Which date, how many people, and what would you like?',
+  };
+  const cType = () => $('input[name="ctype"]:checked', cForm).value;
+  function contactMessage() {
+    const type = cType(), rating = $('input[name="crating"]:checked', cForm);
+    const name = $('#cName').value.trim(), msg = $('#cMsg').value.trim();
+    const out = [`Namaste ${CONFIG.name}! ${type}:`];
+    if (rating && !$('#cRateRow').hidden) {
+      const n = Number(rating.value);
+      out.push(`Rating: ${'★'.repeat(n)}${'☆'.repeat(5 - n)} (${n}/5)`);
+    }
+    if (msg) out.push(msg);
+    if (name) out.push(`– ${name}`);
+    return out.join('\n');
+  }
+  function syncContact() {
+    const type = cType();
+    $('#cRateRow').hidden = !(type === 'Review' || type === 'Feedback');
+    $('#cMsg').placeholder = C_HINT[type];
+    cSend.href = waLink(contactMessage());
+    if ($('#cMsg').value.trim()) $('#cErr').hidden = true;
+  }
+  cForm.addEventListener('input', syncContact);
+  cForm.addEventListener('change', syncContact);
+  cForm.addEventListener('submit', e => { e.preventDefault(); cSend.click(); });
+  cSend.addEventListener('click', e => {
+    if (!$('#cMsg').value.trim()) {
+      e.preventDefault();
+      $('#cErr').hidden = false;
+      $('#cMsg').focus();
+      return;
+    }
+    $('#cDone').hidden = false;
+  });
+  $('#cCopy').addEventListener('click', e => copyText(e.currentTarget, contactMessage(), null));
+  $('#contactPhone').href = 'tel:' + CONFIG.phone.replace(/[^\d+]/g, '');
+  $$('[data-needs="google"]').forEach(el => { el.hidden = !CONFIG.googleReview; });
+  if (CONFIG.googleReview) $('#googleReview').href = CONFIG.googleReview;
+  syncContact();
+  $('#ocopy').addEventListener('click', e => copyText(e.currentTarget, composeMessage(), null));
+
+  /* ─── Makers ─── */
+  const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  const portrait = chef => `
+    <svg viewBox="0 0 200 250" data-draw aria-hidden="true">
+      <path class="d" pathLength="1" d="M28 250C32 202 60 176 100 174C140 176 168 202 172 250"/>
+      <path class="d" pathLength="1" style="--d:.2s" d="M66 ${chef ? 118 : 110}a34 34 0 1 0 68 0a34 34 0 1 0-68 0"/>
+      <path class="d thin" pathLength="1" style="--d:.4s" d="M88 ${chef ? 150 : 142}V174M112 ${chef ? 150 : 142}V174"/>
+      ${chef
+        ? `<path class="d" pathLength="1" style="--d:.5s" d="M72 84H128V96H72ZM70 86C56 82 58 54 78 56C82 38 118 38 122 56C142 54 144 82 130 86"/>
+           <path class="d thin" pathLength="1" style="--d:.7s" d="M90 130q5 4 10 0q5 4 10 0M84 174 100 192 116 174M100 192V204M96 214a2 2 0 1 0 4 0a2 2 0 1 0-4 0M96 232a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/>`
+        : `<path class="d thin" pathLength="1" style="--d:.5s" d="M68 102C70 78 90 68 108 72C122 74 132 86 133 102"/>
+           <path class="d thin" pathLength="1" style="--d:.7s" d="M88 174 100 192 112 174"/>`}
+    </svg>`;
+  $('#makersGrid').innerHTML = TEAM.map(m => `
+    <article class="maker">
+      <div class="maker__frame">${m.photo ? `<img src="${esc(m.photo)}" alt="${esc(m.name)}" loading="lazy">` : portrait(m.chef)}</div>
+      <div class="maker__text">
+        <h3 class="maker__name">${esc(m.name)}</h3>
+        <p class="maker__role">${esc(m.role)}<span lang="hi">${esc(m.roleHi)}</span></p>
+        <p class="maker__bio">${esc(m.bio)}</p>
+      </div>
+    </article>`).join('');
+
+  /* ─── Compass ticks ─── */
+  let td = '';
+  for (let a = 0; a < 360; a += 5) {
+    const r2 = a % 30 === 0 ? 137 : 144, rad = (a - 90) * Math.PI / 180;
+    td += `M${f(160 + 150 * Math.cos(rad))} ${f(160 + 150 * Math.sin(rad))}L${f(160 + r2 * Math.cos(rad))} ${f(160 + r2 * Math.sin(rad))}`;
+  }
+  $('#ticks').setAttribute('d', td);
+
+  /* ─── Illustrations draw as they come into view; favourites redraw on hover ─── */
+  if (!reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.remove('armed'); io.unobserve(e.target); }
+    }), { threshold: .15 });
+    $$('[data-draw]').forEach(el => { el.classList.add('armed'); io.observe(el); });
+    $$('.sig__card').forEach(card => card.addEventListener('pointerenter', () => {
+      const art = $('[data-draw]', card);
+      if (art.classList.contains('armed')) return;
+      art.classList.add('armed');
+      art.getBoundingClientRect();
+      art.classList.remove('armed');
+    }));
+  }
+
+  // Pause the favourites' little loops while they're off screen.
+  if ('IntersectionObserver' in window) {
+    const pauser = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('is-off', !e.isIntersecting)));
+    $$('[data-anim]').forEach(el => pauser.observe(el));
+  }
+
+  /* ─── The thread: the cart's ground line continues down the whole page ─── */
+  const page = $('.page'), header = $('#header');
+  const tLine = $('.thread__line'), tGuide = $('.thread__guide'), tWheel = $('.thread__wheel'), thread = $('.thread');
+  const cartSvg = $('.cart'), footer = $('.foot');
+  const logoWheel = $('.logo-wheel');
+  let len = 0, lut = [], cur = 0, raf = 0, rebuild = 0, wheelScale = 1;
+
+  // Pause the rolling street scene while it's scrolled out of view.
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => {
+      cartSvg.classList.toggle('is-off', !e.isIntersecting);
+    }).observe(cartSvg);
+  }
+
+  function buildThread() {
+    const W = page.clientWidth, H = page.offsetHeight;
+    thread.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    thread.setAttribute('width', W);
+    thread.setAttribute('height', H);
+    const pr = page.getBoundingClientRect();
+    const narrow = W < 700;
+    wheelScale = narrow ? .68 : 1;
+    const gut = narrow ? 8 : Math.max(14, (W - 1180) / 2 - 30);
+    const L = gut, R = W - gut;
+
+    const cr = cartSvg.getBoundingClientRect();
+    const gy = cr.top - pr.top + cr.height * (412 / 440);
+    const gx = Math.min(cr.right - pr.left, R - 4);
+    const rr = Math.max(4, Math.min(40, R - gx));
+    let d = `M${f(gx)} ${f(gy)}H${f(R - rr)}Q${f(R)} ${f(gy)} ${f(R)} ${f(gy + rr)}`;
+    let x = R;
+    $$('[data-thread]').forEach(s => {
+      const side = s.dataset.thread === 'left' ? L : R;
+      if (side === x) return;
+      const top = s.getBoundingClientRect().top - pr.top, k = narrow ? 44 : 72;
+      d += `V${f(top - k)}C${f(x)} ${f(top)} ${f(side)} ${f(top)} ${f(side)} ${f(top + k)}`;
+      x = side;
+    });
+    // The road ends by turning onto the footer's top rule, so nothing runs beside the wordmark.
+    const ey = footer.getBoundingClientRect().top - pr.top + .5, dir = x === L ? 1 : -1;
+    d += `V${f(ey - 36)}Q${f(x)} ${f(ey)} ${f(x + dir * 36)} ${f(ey)}H${f(dir > 0 ? R : L)}`;
+
+    tLine.setAttribute('d', d);
+    tGuide.setAttribute('d', d);
+    len = tLine.getTotalLength();
+    tLine.style.strokeDasharray = `${len} ${len + 10}`;
+    lut = [];
+    for (let s = 0; s < len; s += 12) lut.push([s, tLine.getPointAtLength(s).y]);
+    lut.push([len, tLine.getPointAtLength(len).y]);
+    cur = reduce ? len : Math.min(cur, len);
+    kick();
+  }
+
+  // Longest drawn length whose tip is still above page-y `y` (the path only ever runs downward).
+  function lengthAtY(y) {
+    if (!lut.length || y <= lut[0][1]) return 0;
+    let lo = 0, hi = lut.length - 1;
+    if (y >= lut[hi][1]) return len;
+    while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (lut[mid][1] <= y) lo = mid; else hi = mid; }
+    const [s0, y0] = lut[lo], [s1, y1] = lut[hi];
+    return y1 === y0 ? s0 : s0 + (s1 - s0) * (y - y0) / (y1 - y0);
+  }
+  function targetY() {
+    const vh = innerHeight, max = document.documentElement.scrollHeight - vh;
+    const t = max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 1;
+    return -page.getBoundingClientRect().top + vh * (.6 + .4 * t * t * t);
+  }
+  function paint() {
+    tLine.style.strokeDashoffset = f(len - cur);
+    const p = tLine.getPointAtLength(cur);
+    const deg = (cur / (11 * wheelScale)) * 57.2958 % 360;
+    tWheel.setAttribute('transform', `translate(${f(p.x)} ${f(p.y)}) rotate(${f(deg)}) scale(${wheelScale})`);
+    const a = f(scrollY * .45 % 360);
+    logoWheel.setAttribute('transform', `rotate(${a} 16 16)`);
+  }
+  function tick() {
+    raf = 0;
+    const tgt = reduce ? len : lengthAtY(targetY());
+    const diff = tgt - cur;
+    cur = Math.abs(diff) < .5 ? tgt : cur + diff * .12;
+    paint();
+    if (cur !== tgt) raf = requestAnimationFrame(tick);
+  }
+  function kick() { if (!raf) raf = requestAnimationFrame(tick); }
+
+  addEventListener('scroll', () => {
+    header.classList.toggle('is-scrolled', scrollY > 8);
+    kick();
+  }, { passive: true });
+  const schedule = () => { cancelAnimationFrame(rebuild); rebuild = requestAnimationFrame(() => { buildThread(); setActive(activeTab); }); };
+  if ('ResizeObserver' in window) new ResizeObserver(schedule).observe(page);
+  else addEventListener('resize', schedule);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
+  buildThread();
+  header.classList.toggle('is-scrolled', scrollY > 8);
+})();
+</script>
+
+</body>
+</html>
