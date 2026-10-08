@@ -2,7 +2,7 @@
 
 Website for **Ghoom XI**, our fast food cart in Purnia, Bihar. Momos, rolls, chowmein, burgers and kulhad chai, cooked to order every evening.
 
-Live site: https://sanskar325.github.io/Thela/
+Live site: https://thela-alpha.vercel.app/
 
 ## What's on the site
 
