@@ -347,37 +347,23 @@ h2{font:400 clamp(36px,4.6vw,64px)/1.04 var(--f-display);letter-spacing:-.005em;
 /* Quests: rewards for ordering through the site */
 .quests{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,32px)}
 .quest{position:relative;display:grid;gap:12px;align-content:start;padding:clamp(20px,2.5vw,28px);border:1px solid var(--brass-dim);border-radius:8px;background:var(--night-2);transition:border-color .4s}
-.quest.is-ready{border-color:var(--brass)}
 .quest__top{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .quest__icon{width:52px;height:52px}
 .quest__status{padding:4px 11px;border:1px solid var(--brass-dim);border-radius:999px;font:500 12px/1.3 var(--f-body);letter-spacing:.06em;color:var(--moss);white-space:nowrap}
-.quest__status.is-ready{border-color:var(--brass);background:var(--brass);color:var(--night)}
 .quest__kicker{margin:0;font:500 12px/1.3 var(--f-body);letter-spacing:.18em;text-transform:uppercase;color:var(--brass)}
 .quest__title{font:400 26px/1.15 var(--f-display)}
 .quest__text{margin:0;font-size:15.5px;color:var(--moss)}
 .quest__code{display:inline-flex;align-items:center;gap:10px;justify-self:start;margin:0;padding:6px 12px;border:1px dashed var(--brass);border-radius:4px;font-size:13px;color:var(--moss)}
 .quest__code b{font:600 16px/1 var(--f-body);letter-spacing:.14em;color:var(--chalk)}
-.quest .btn{justify-self:start}
-.quest .btn[disabled]{opacity:.45;cursor:not-allowed}
-.quest .btn[disabled]::before{display:none}
+.quest__actions{display:flex;flex-wrap:wrap;gap:10px}
 .quest__note{margin:0;font-size:14px;color:var(--chalk)}
-.quest__note.is-bad{color:var(--alert)}
 .stamps{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 0;padding:0;list-style:none}
-.stamp{display:grid;place-items:center;width:40px;height:40px;border:1.5px dashed var(--brass-dim);border-radius:50%}
-.stamp svg{width:24px;height:24px;opacity:0;transform:scale(.6);transition:opacity .3s,transform .3s}
-.stamp svg path{fill:none;stroke:var(--brass);stroke-width:1.8;stroke-linecap:round}
-.stamp svg circle{fill:var(--brass)}
-.stamp.is-on{border-style:solid;border-color:var(--brass);background:color-mix(in srgb,var(--brass) 14%,transparent)}
-.stamp.is-on svg{opacity:1;transform:none}
-.stamp.just{animation:stampIn .65s cubic-bezier(.2,.7,.25,1.35) both}
-@keyframes stampIn{from{transform:scale(1.8) rotate(-28deg);opacity:0}}
-.stamp--gift{width:auto;padding-inline:13px;border-radius:999px;font:600 11px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--moss)}
-.stamp--gift.is-ready{border-style:solid;border-color:var(--brass);background:var(--brass);color:var(--night)}
+.stamp{display:grid;place-items:center;width:40px;height:40px;border:1.5px dashed var(--brass-dim);border-radius:50%;font:500 14px/1 var(--f-body);color:var(--moss);font-variant-numeric:tabular-nums}
+.stamp--gift{width:auto;padding-inline:13px;border-style:solid;border-color:var(--brass);border-radius:999px;background:var(--brass);font:600 11px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--night)}
 .badges{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:2px 0 0;padding:0;list-style:none}
-.badge{display:grid;justify-items:center;gap:5px;padding:9px 4px 8px;border:1px dashed var(--brass-dim);border-radius:6px;font-size:12px;line-height:1.2;text-align:center;color:var(--moss);opacity:.65;transition:opacity .4s,color .4s,border-color .4s}
+.badge{display:grid;justify-items:center;gap:5px;padding:9px 4px 8px;border:1px solid var(--brass-dim);border-radius:6px;font-size:12px;line-height:1.2;text-align:center;color:var(--chalk)}
 .badge svg{width:28px;height:28px}
-.badge path{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.badge.is-on{border-style:solid;border-color:var(--brass);color:var(--brass);opacity:1}
+.badge path{fill:none;stroke:var(--brass);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .quests__fine{margin:20px 0 0;max-width:62em;font-size:13.5px;color:var(--moss)}
 @media (max-width:980px){.quests{grid-template-columns:minmax(0,1fr);max-width:560px}}
 
@@ -932,10 +918,10 @@ body.has-order .foot{padding-bottom:150px}
       <header class="sec-head">
         <p class="eyebrow">Ghoom quests</p>
         <h2>Small quests, <span class="hl" data-draw>free food.</span></h2>
-        <p class="lead">Order through the site to fill your Ghoom card and work your way round the menu. Your progress is saved on this phone, and we check it when we confirm your order on WhatsApp.</p>
+        <p class="lead">No sign-up needed: your WhatsApp number is your Ghoom card. We note every order we confirm, so your rewards follow you to any phone. Ask us any time where you stand.</p>
       </header>
       <div class="quests" id="questGrid"></div>
-      <p class="quests__fine">One coupon per order. Rewards are for orders sent through this site, and we confirm each one when we reply on WhatsApp.</p>
+      <p class="quests__fine">One coupon per order. We keep your Ghoom card against your WhatsApp number, add a stamp each time we confirm an order, and check it before giving any reward.</p>
     </div>
   </section>
 
@@ -1395,16 +1381,11 @@ body.has-order .foot{padding-bottom:150px}
   }
   setActive(activeTab);
 
-  /* ─── Ghoom quests: rewards for ordering through the site. Progress lives on the customer's phone;
-     every order message carries the coupon and stamp count, and we confirm them on WhatsApp. ─── */
-  const QC = CONFIG.quests, QKEY = 'ghoomxi-quests';
-  const quest = (() => {
-    const fresh = { orders: 0, stamps: 0, tried: [], used: [], explorerClaimed: false, last: null };
-    try { return { ...fresh, ...(JSON.parse(localStorage.getItem(QKEY)) || {}) }; } catch { return fresh; }
-  })();
-  const saveQuest = () => { try { localStorage.setItem(QKEY, JSON.stringify(quest)); } catch { /* private window: progress lasts for this visit */ } };
+  /* ─── Ghoom quests. There are no accounts: a customer's WhatsApp number is their Ghoom card.
+     We keep stamps and rewards in our own ledger and check it before confirming any reward. ─── */
+  const QC = CONFIG.quests;
   function findDish({ name, size }) {
-    for (const [gi, g] of MENU.entries()) for (const [ii, it] of g.items.entries()) {
+    for (const g of MENU) for (const it of g.items) {
       if (it.name !== name) continue;
       const pi = Math.max(0, it.prices.findIndex(p => p[0] === size));
       return { name, size: it.prices.length > 1 ? it.prices[pi][0] : '', price: it.prices[pi][1] };
@@ -1414,26 +1395,15 @@ body.has-order .foot{padding-bottom:150px}
   const dishLabel = d => `${d.name}${d.size ? ` (${d.size})` : ''}`;
   const dishPhrase = d => (d.size ? `${d.size} plate of ${d.name}` : d.name).toLowerCase(); // "half plate of veg steamed momos"
   const EXPLORE = [
-    { id: 'momos', label: 'Momos', test: g => g.id === 'momos',
-      icon: 'M7 23C5 15 11 10 16 8C21 10 27 15 25 23ZM16 8Q13 14 12 20M16 8V21M16 8Q19 14 20 20M14 7Q16 4 18 7' },
-    { id: 'roll', label: 'A roll', test: g => g.id === 'rolls',
-      icon: 'M11 6a5 2 0 1 0 10 0a5 2 0 1 0-10 0M11 6V27M21 6V27M9 15l2.4-2 2.4 2 2.4-2 2.4 2 2.4-2 2.4 2' },
-    { id: 'chowmein', label: 'Chowmein', test: (g, it) => /chowmein/i.test(it.name),
-      icon: 'M5 17H27A11 11 0 0 1 5 17ZM8 16C10 11 13 16 15 12S19 16 21 12 24 15 25 16M23 4 16 13M26 6 18 14' },
-    { id: 'chai', label: 'Kulhad chai', test: (g, it) => /kulhad/i.test(it.name),
-      icon: 'M8 10H24L22 26Q16 28 10 26ZM8 10Q16 13 24 10M13 7q-2-2 0-4M18 7q-2-2 0-4' },
+    { label: 'Momos', icon: 'M7 23C5 15 11 10 16 8C21 10 27 15 25 23ZM16 8Q13 14 12 20M16 8V21M16 8Q19 14 20 20M14 7Q16 4 18 7' },
+    { label: 'A roll', icon: 'M11 6a5 2 0 1 0 10 0a5 2 0 1 0-10 0M11 6V27M21 6V27M9 15l2.4-2 2.4 2 2.4-2 2.4 2 2.4-2 2.4 2' },
+    { label: 'Chowmein', icon: 'M5 17H27A11 11 0 0 1 5 17ZM8 16C10 11 13 16 15 12S19 16 21 12 24 15 25 16M23 4 16 13M26 6 18 14' },
+    { label: 'Kulhad chai', icon: 'M8 10H24L22 26Q16 28 10 26ZM8 10Q16 13 24 10M13 7q-2-2 0-4M18 7q-2-2 0-4' },
   ];
-  const explored = () => EXPLORE.filter(x => quest.tried.includes(x.id)).length;
   const COUPONS = {
-    [QC.welcome.code]: { kind: 'flat', off: QC.welcome.off, minOrder: QC.welcome.minOrder,
-      ready: () => quest.orders === 0 && !quest.used.includes(QC.welcome.code),
-      why: () => `${QC.welcome.code} is for a first order only.` },
-    [QC.stamps.code]: { kind: 'free', item: QC.stamps.freeItem,
-      ready: () => quest.stamps >= QC.stamps.needed,
-      why: () => `Fill your Ghoom card first: ${quest.stamps} of ${QC.stamps.needed} stamps.` },
-    [QC.explorer.code]: { kind: 'free', item: QC.explorer.freeItem,
-      ready: () => explored() === EXPLORE.length && !quest.explorerClaimed,
-      why: () => quest.explorerClaimed ? 'You have already used this reward.' : `Try all four favourites first: ${explored()} of ${EXPLORE.length} tried.` },
+    [QC.welcome.code]: { kind: 'flat', off: QC.welcome.off, minOrder: QC.welcome.minOrder, check: "We check it's your first order before we confirm." },
+    [QC.stamps.code]: { kind: 'free', item: QC.stamps.freeItem, check: 'We check your Ghoom card before we confirm.' },
+    [QC.explorer.code]: { kind: 'free', item: QC.explorer.freeItem, check: 'We check your Ghoom card before we confirm.' },
   };
   const couponLabel = code => { const c = COUPONS[code]; return c.kind === 'flat' ? `${rupee(c.off)} off` : `free ${dishPhrase(findDish(c.item))}`; };
   let coupon = null; // the code applied to the current order
@@ -1441,41 +1411,18 @@ body.has-order .foot{padding-bottom:150px}
   function applyCoupon(raw) {
     const code = String(raw).trim().toUpperCase();
     if (!code) return 'Type a coupon code first.';
-    const c = COUPONS[code];
-    if (!c) return `${code} isn't a ${CONFIG.name} coupon. Check the spelling.`;
-    if (!c.ready()) return c.why();
+    if (!COUPONS[code]) return `${code} isn't a ${CONFIG.name} coupon. Check the spelling.`;
     coupon = code;
     return '';
   }
   function renderCoupon(b) {
-    $('#couponChips').innerHTML = Object.keys(COUPONS).filter(code => COUPONS[code].ready()).map(code => `
-      <button type="button" class="cchip${code === coupon ? ' is-applied' : ''}" data-code="${code}">
-        <b>${code}</b>${couponLabel(code)}${code === coupon ? ' · Remove' : ''}
-      </button>`).join('');
+    $('#couponChips').innerHTML = coupon
+      ? `<button type="button" class="cchip is-applied" data-code="${coupon}"><b>${coupon}</b>${couponLabel(coupon)} · Remove</button>` : '';
     const msg = $('#couponMsg');
     if (msg.classList.contains('is-bad')) return;
-    const text = b.couponHint || (coupon ? `${coupon} applied: ${couponLabel(coupon)}.` : '');
+    const text = b.couponHint || (coupon ? `${coupon} applied: ${couponLabel(coupon)}. ${COUPONS[coupon].check}` : '');
     msg.hidden = !text;
     msg.textContent = text;
-  }
-  // Called once an order has gone to WhatsApp: stamp the card, mark rewards used, tick off dishes tried.
-  function recordOrder(b) {
-    const sig = b.ls.map(l => `${l.key}x${l.q}`).join(','); // the dishes only: the coupon is cleared after the first send
-    if (quest.last && quest.last.sig === sig && Date.now() - quest.last.t < 30 * 60 * 1000) return; // the same order sent twice
-    quest.last = { sig, t: Date.now() };
-    const before = quest.stamps;
-    quest.orders += 1;
-    quest.stamps = coupon === QC.stamps.code ? 0 : Math.min(QC.stamps.needed, quest.stamps + 1);
-    if (coupon === QC.welcome.code && b.discount) quest.used.push(coupon);
-    if (coupon === QC.explorer.code) quest.explorerClaimed = true;
-    b.ls.forEach(l => {
-      const [gi, ii] = l.key.split('.').map(Number);
-      EXPLORE.forEach(x => { if (x.test(MENU[gi], MENU[gi].items[ii]) && !quest.tried.includes(x.id)) quest.tried.push(x.id); });
-    });
-    coupon = null;
-    saveQuest();
-    renderQuests(before);
-    syncOrder();
   }
 
   /* ─── Ordering: Add buttons, the half/full sheet, pickup or delivery, and the bill ─── */
@@ -1531,7 +1478,6 @@ body.has-order .foot{padding-bottom:150px}
     if (b.mode === 'delivery') out.push('Order type: Home delivery', `Address: ${$('#oaddr').value.trim() || '(not given)'}`);
     else out.push('Order type: Pickup from the cart', `Pickup: ${$('#pickup').value}`);
     out.push(`Payment: ${payNow() ? "Paying now by UPI (I'll send the screenshot)" : b.mode === 'delivery' ? 'Cash or UPI on delivery' : 'Cash or UPI at the cart'}`);
-    out.push(`Ghoom card: ${quest.stamps} of ${QC.stamps.needed} stamps`);
     const note = $('#onote').value.trim();
     if (note) out.push(`Note: ${note}`);
     return out.join('\n');
@@ -1566,7 +1512,6 @@ body.has-order .foot{padding-bottom:150px}
   }
 
   function syncOrder() {
-    if (coupon && !COUPONS[coupon].ready()) coupon = null;
     $$('.add', groupsEl).forEach(renderAdd);
     const b = bill();
     bar.hidden = b.count === 0;
@@ -1661,9 +1606,7 @@ body.has-order .foot{padding-bottom:150px}
       $('#onudge').hidden = false;
       $('#onudge').textContent = 'Add your delivery address so we can find you.';
       $('#oaddr').focus();
-      return;
     }
-    setTimeout(() => recordOrder(b), 0); // after WhatsApp has opened with this exact message
   });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !panel.hidden && !sheet.open) setPanel(false); });
 
@@ -1836,73 +1779,52 @@ body.has-order .foot{padding-bottom:150px}
   const QW = QC.welcome, QS = QC.stamps, QX = QC.explorer;
   const qIcon = d => `<svg class="quest__icon" viewBox="0 0 48 48" data-draw aria-hidden="true">${d.map((p, i) =>
     `<path class="d${i ? ' thin' : ''}" pathLength="1" style="--d:${i * .25}s" d="${p}"/>`).join('')}</svg>`;
+  const ask = text => waLink(`Namaste ${CONFIG.name}! ${text}`);
   $('#questGrid').innerHTML = `
     <article class="quest" id="qWelcome">
-      <div class="quest__top">${qIcon(['M6 14H42V20a4 4 0 0 0 0 8V34H6V28a4 4 0 0 0 0-8Z', 'M32 16V18M32 22V24M32 28V30M14 29 24 19M14 20a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0-3.2 0M21 28a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0-3.2 0'])}<span class="quest__status"></span></div>
+      <div class="quest__top">${qIcon(['M6 14H42V20a4 4 0 0 0 0 8V34H6V28a4 4 0 0 0 0-8Z', 'M32 16V18M32 22V24M32 28V30M14 29 24 19M14 20a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0-3.2 0M21 28a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0-3.2 0'])}<span class="quest__status">New customers</span></div>
       <p class="quest__kicker">Welcome to Ghoom</p>
       <h3 class="quest__title">${rupee(QW.off)} off your first order</h3>
       <p class="quest__text">Your first order of ${rupee(QW.minOrder)} or more through this site gets ${rupee(QW.off)} off.</p>
       <p class="quest__code">Code <b>${QW.code}</b></p>
-      <button type="button" class="btn btn--sm" data-use="${QW.code}">Use in my order</button>
+      <div class="quest__actions"><button type="button" class="btn btn--sm" data-use="${QW.code}">Use in my order</button></div>
       <p class="quest__note" role="status" hidden></p>
     </article>
     <article class="quest" id="qStamps">
-      <div class="quest__top">${qIcon(['M6 12H42V36H6Z', 'M11 24a4 4 0 1 0 8 0a4 4 0 1 0-8 0M20 24a4 4 0 1 0 8 0a4 4 0 1 0-8 0M29 24a4 4 0 1 0 8 0a4 4 0 1 0-8 0'])}<span class="quest__status"></span></div>
+      <div class="quest__top">${qIcon(['M6 12H42V36H6Z', 'M11 24a4 4 0 1 0 8 0a4 4 0 1 0-8 0M20 24a4 4 0 1 0 8 0a4 4 0 1 0-8 0M29 24a4 4 0 1 0 8 0a4 4 0 1 0-8 0'])}<span class="quest__status">On your WhatsApp number</span></div>
       <p class="quest__kicker">The Ghoom card</p>
       <h3 class="quest__title">${ordinal(QS.needed + 1)} order, free ${QS.short}</h3>
-      <p class="quest__text">Every order you send through this site earns a stamp. Fill all ${QS.needed} and your next order comes with a free ${dishPhrase(findDish(QS.freeItem))}.</p>
-      <ol class="stamps" aria-label="Your Ghoom card"></ol>
-      <button type="button" class="btn btn--sm" data-use="${QS.code}" hidden>Use my free ${QS.short}</button>
+      <p class="quest__text">Every order we confirm earns a stamp, kept against your WhatsApp number. After ${QS.needed} stamps, your next order comes with a free ${dishPhrase(findDish(QS.freeItem))}.</p>
+      <ol class="stamps" aria-label="How the Ghoom card fills up">${Array.from({ length: QS.needed }, (_, i) => `<li class="stamp">${i + 1}</li>`).join('')}<li class="stamp stamp--gift">Free</li></ol>
+      <div class="quest__actions">
+        <a class="btn btn--sm btn--ghost" href="${ask('How many stamps are on my Ghoom card?')}" target="_blank" rel="noopener">Check my stamps</a>
+        <button type="button" class="btn btn--sm" data-use="${QS.code}">Use my free ${QS.short}</button>
+      </div>
       <p class="quest__note" role="status" hidden></p>
     </article>
     <article class="quest" id="qExplore">
-      <div class="quest__top">${qIcon(['M6 24a18 18 0 1 0 36 0a18 18 0 1 0-36 0', 'M24 13 29 24 24 35 19 24ZM24 8V10M24 38V40M8 24H10M38 24H40'])}<span class="quest__status"></span></div>
+      <div class="quest__top">${qIcon(['M6 24a18 18 0 1 0 36 0a18 18 0 1 0-36 0', 'M24 13 29 24 24 35 19 24ZM24 8V10M24 38V40M8 24H10M38 24H40'])}<span class="quest__status">Over any visits</span></div>
       <p class="quest__kicker">Ghoom the menu</p>
       <h3 class="quest__title">Try all four favourites</h3>
-      <p class="quest__text">Order momos, a roll, chowmein and kulhad chai at least once each, and your next ${dishPhrase(findDish(QX.freeItem))} is on us.</p>
-      <ul class="badges" aria-label="Favourites you have tried"></ul>
-      <button type="button" class="btn btn--sm" data-use="${QX.code}" hidden>Use my free ${QX.short}</button>
+      <p class="quest__text">Order momos, a roll, chowmein and kulhad chai over your visits. Once we've served you all four, your next ${dishPhrase(findDish(QX.freeItem))} is on us.</p>
+      <ul class="badges" aria-label="The four favourites">${EXPLORE.map(e => `
+        <li class="badge"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="${e.icon}"/></svg>${e.label}</li>`).join('')}</ul>
+      <div class="quest__actions">
+        <a class="btn btn--sm btn--ghost" href="${ask('Which of the four favourites have I tried so far?')}" target="_blank" rel="noopener">Check my progress</a>
+        <button type="button" class="btn btn--sm" data-use="${QX.code}">Use my free ${QX.short}</button>
+      </div>
       <p class="quest__note" role="status" hidden></p>
     </article>`;
-  const WHEEL = '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 16a11 11 0 1 0 22 0a11 11 0 1 0-22 0M16 5V27M6.5 10.5 25.5 21.5M6.5 21.5 25.5 10.5"/><circle cx="16" cy="16" r="2.6"/></svg>';
-  function setStatus(card, text, ready) {
-    const el = $('.quest__status', card);
-    el.textContent = text;
-    el.classList.toggle('is-ready', ready);
-    card.classList.toggle('is-ready', ready);
-  }
-  function renderQuests(before = quest.stamps) {
-    const w = $('#qWelcome'), s = $('#qStamps'), x = $('#qExplore');
-    const wReady = COUPONS[QW.code].ready();
-    setStatus(w, wReady ? 'Ready to use' : quest.used.includes(QW.code) ? 'Used' : 'First order done', wReady);
-    $('[data-use]', w).disabled = !wReady;
-
-    const full = quest.stamps >= QS.needed;
-    $('.stamps', s).innerHTML = Array.from({ length: QS.needed }, (_, i) => {
-      const on = i < quest.stamps, fresh = on && i >= before;
-      return `<li class="stamp${on ? ' is-on' : ''}${fresh ? ' just' : ''}" style="animation-delay:${fresh ? (i - before) * 120 : 0}ms">${WHEEL}<span class="sr">Stamp ${i + 1}${on ? ', collected' : ''}</span></li>`;
-    }).join('') + `<li class="stamp stamp--gift${full ? ' is-ready' : ''}">Free</li>`;
-    setStatus(s, full ? 'Card full' : `${quest.stamps} of ${QS.needed} stamps`, full);
-    $('[data-use]', s).hidden = !full;
-
-    $('.badges', x).innerHTML = EXPLORE.map(e => `
-      <li class="badge${quest.tried.includes(e.id) ? ' is-on' : ''}"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="${e.icon}"/></svg>${e.label}<span class="sr">${quest.tried.includes(e.id) ? ', tried' : ', not tried yet'}</span></li>`).join('');
-    const xReady = COUPONS[QX.code].ready();
-    setStatus(x, quest.explorerClaimed ? 'Done' : xReady ? 'Unlocked' : `${explored()} of ${EXPLORE.length} tried`, xReady);
-    $('[data-use]', x).hidden = !xReady;
-  }
   $('#questGrid').addEventListener('click', e => {
     const btn = e.target.closest('[data-use]');
     if (!btn) return;
     const note = $('.quest__note', btn.closest('.quest'));
-    const err = applyCoupon(btn.dataset.use);
-    note.hidden = false;
-    note.classList.toggle('is-bad', Boolean(err));
-    if (err) { note.textContent = err; return; }
+    applyCoupon(btn.dataset.use);
     $('#couponMsg').classList.remove('is-bad');
     syncOrder();
+    note.hidden = false;
     if (order.size) {
-      note.textContent = 'Applied to your order.';
+      note.textContent = `Applied to your order. ${COUPONS[coupon].check}`;
       setPanel(true);
     } else {
       note.textContent = 'Applied. Add your dishes and it shows in your bill.';
@@ -1921,13 +1843,10 @@ body.has-order .foot{padding-bottom:150px}
   $('#couponInput').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); couponFromBox(); } });
   $('#couponInput').addEventListener('input', () => { const m = $('#couponMsg'); if (m.classList.contains('is-bad')) { m.classList.remove('is-bad'); m.hidden = true; } });
   $('#couponChips').addEventListener('click', e => {
-    const chip = e.target.closest('[data-code]');
-    if (!chip) return;
-    $('#couponMsg').classList.remove('is-bad');
-    if (chip.dataset.code === coupon) coupon = null; else applyCoupon(chip.dataset.code);
+    if (!e.target.closest('[data-code]')) return;
+    coupon = null; // the only chip is the applied coupon: tapping it removes it
     syncOrder();
   });
-  renderQuests();
 
   /* ─── Makers ─── */
   const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
