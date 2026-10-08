@@ -9,6 +9,7 @@ Live site: https://sanskar325.github.io/Thela/
 - An animated line drawing of the cart rolling down the street, with the chef at the tawa and a cat walking alongside
 - The full menu in English and Hindi, with veg and non-veg marks, half and full plates, search and filters
 - Order ahead: pick your dishes, choose pickup or home delivery, and send the order to us on WhatsApp
+- Ghoom quests: ₹20 off a first order, a stamp card where the 6th order gets free momos, and a free kulhad chai for trying all four favourites
 - Pay by UPI or cash
 - Opening hours and directions to the cart on Google Maps
 - A contact and review form that sends your message to us on WhatsApp
@@ -37,6 +38,7 @@ Everything you would normally change is at the top of the `<script>` block near 
 | `CONFIG` | WhatsApp number, phone number, UPI ID, the cart's location, opening hours, delivery charges, FSSAI number, Zomato and Swiggy links |
 | `TEAM` | The people behind the cart: names, roles, a line about each, and photos |
 | `MENU` | Dishes, Hindi names, notes and prices |
+| `CONFIG.quests` | Coupon codes and rewards for the welcome discount, the stamp card and the menu explorer |
 
 A few examples:
 
@@ -47,6 +49,8 @@ hours: { open: '16:00', close: '22:30', closedDays: [] },
 ```
 
 Buttons for things that are not filled in yet (phone, UPI, Zomato, Swiggy, Google reviews) stay hidden until you add them.
+
+Quest progress (stamps, dishes tried, coupons used) is saved in each customer's browser. Every WhatsApp order includes the coupon and the customer's stamp count, so check them against your chat before you confirm.
 
 To add a photo to the team section, put the image in a `makers/` folder and set its path, for example `photo: 'makers/sanskar.jpg'`.
 
